@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b1fku66aejinc"]
 
+[ext_resource type="Script" uid="uid://bv41uluratcmu" path="res://main_menu.gd" id="1_06t4h"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6omp"]
 bg_color = Color(0.33333334, 0.33333334, 0.33333334, 1)
 
@@ -10,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_06t4h")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1574305503]
 layout_mode = 1
@@ -39,19 +42,35 @@ text = "Topdown Mobile Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="." unique_id=512328763]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1704190460]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
+offset_left = -249.845
 offset_top = 76.0
-offset_right = 64.0
-offset_bottom = 140.0
+offset_right = 250.15613
+offset_bottom = 187.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="StartServer" type="Button" parent="HBoxContainer" unique_id=512328763]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_k6omp")
-text = "Start"
+text = "Start Server"
+
+[node name="Join Game" type="Button" parent="HBoxContainer" unique_id=1646288609]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6omp")
+text = "Join Game"
+
+[connection signal="pressed" from="HBoxContainer/StartServer" to="." method="_on_start_server_pressed"]
+[connection signal="pressed" from="HBoxContainer/Join Game" to="." method="_on_join_game_pressed"]

@@ -1,18 +1,6 @@
 [gd_scene format=3 uid="uid://hiuauehffhc6"]
 
-[ext_resource type="PackedScene" uid="uid://b1fku66aejinc" path="res://main_menu.tscn" id="1_80edf"]
-[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://hud.tscn" id="2_6lon5"]
+[ext_resource type="Script" uid="uid://dvsun1wmifgn6" path="res://gui.gd" id="1_q8o8l"]
 
 [node name="GUI" type="CanvasLayer" unique_id=285665816]
-
-[node name="MainMenu" parent="." unique_id=1077805799 instance=ExtResource("1_80edf")]
-visible = false
-
-[node name="HUD" parent="." unique_id=122071565 instance=ExtResource("2_6lon5")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_q8o8l")
