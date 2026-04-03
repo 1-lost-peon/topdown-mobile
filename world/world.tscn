@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://kvux3lrcv1ao"]
+
+[ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="1_6xmxd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
+albedo_color = Color(0, 0.99215686, 0, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6xmxd"]
+sky_top_color = Color(0.99333334, 1, 0.9, 1)
+
+[sub_resource type="Sky" id="Sky_tcf2h"]
+sky_material = SubResource("ProceduralSkyMaterial_6xmxd")
+
+[sub_resource type="Environment" id="Environment_4717r"]
+background_mode = 2
+sky = SubResource("Sky_tcf2h")
+
+[node name="World" type="Node3D" unique_id=1944548304]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=702403821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1289780089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
+use_collision = true
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Player" parent="." unique_id=548357737 instance=ExtResource("1_6xmxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7248578, 1.1537316, -6.24964)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2013126949]
+environment = SubResource("Environment_4717r")

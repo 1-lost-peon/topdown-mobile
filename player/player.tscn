@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://7dujjowjcp6r"]
+
+[ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oul6g"]
+
+[node name="Player" type="CharacterBody3D" unique_id=548357737]
+script = ExtResource("1_rkbax")
+
+[node name="Mannequin_Medium" parent="." unique_id=623490887 instance=ExtResource("1_oul6g")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=352145330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oul6g")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1345496390]
+transform = Transform3D(1, 0, 0, 0, 0.49999994, 0.8660254, 0, -0.8660254, 0.49999994, 0, 10, 5)
+projection = 1
+size = 15.0
