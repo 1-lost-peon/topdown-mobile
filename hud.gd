@@ -4,9 +4,9 @@ class_name HUD
 @onready var joy_stick_nub: TextureRect = %JoyStickNub
 @onready var joy_stick_pad: TextureRect = %JoyStickPad
 
-var default_position := Vector2(32, 32)
+var default_position := Vector2(64, 64)
 var active_touch := -1
-var max_distance := 96.0 # 3 * 32
+var max_distance := 192.0 # 3 * 64
 var drag_vector: Vector2
 
 
@@ -21,6 +21,7 @@ func _input(event: InputEvent) -> void:
 				active_touch = event.index
 		else:
 			if event.index == active_touch:
+				drag_vector = Vector2.ZERO
 				active_touch = -1
 				create_tween().tween_property(joy_stick_nub, "position", default_position, 0.08)
 		
@@ -33,5 +34,4 @@ func _input(event: InputEvent) -> void:
 				drag_vector = drag_vector.normalized() * max_distance
 			
 			joy_stick_nub.global_position = base_center + drag_vector - joy_stick_nub.size / 2.0
-	else:
-		drag_vector = drag_vector.move_toward(Vector2.ZERO, 10)
+		

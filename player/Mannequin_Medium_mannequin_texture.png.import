@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c270yrr325e1s"
 path.s3tc="res://.godot/imported/Mannequin_Medium_mannequin_texture.png-81476e04107dea5f9c33c4909f2972b2.s3tc.ctex"
+path.etc2="res://.godot/imported/Mannequin_Medium_mannequin_texture.png-81476e04107dea5f9c33c4909f2972b2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://player/Mannequin_Medium_mannequin_texture.png"
-dest_files=["res://.godot/imported/Mannequin_Medium_mannequin_texture.png-81476e04107dea5f9c33c4909f2972b2.s3tc.ctex"]
+dest_files=["res://.godot/imported/Mannequin_Medium_mannequin_texture.png-81476e04107dea5f9c33c4909f2972b2.s3tc.ctex", "res://.godot/imported/Mannequin_Medium_mannequin_texture.png-81476e04107dea5f9c33c4909f2972b2.etc2.ctex"]
 
 [params]
 
