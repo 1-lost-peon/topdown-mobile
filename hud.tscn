@@ -4,16 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://bdlm2im76hwe1" path="res://joystick_circle_pad_a.png" id="1_64ctp"]
 [ext_resource type="Texture2D" uid="uid://cic47psu7jdvj" path="res://joystick_circle_nub_c.png" id="2_8sq4i"]
 
-[node name="HUD" type="Control" unique_id=122071565]
+[node name="HUD" type="CanvasLayer" unique_id=670834492]
+script = ExtResource("1_8sq4i")
+
+[node name="Main" type="Control" parent="." unique_id=1358944140]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_8sq4i")
 
-[node name="JoyStickPad" type="TextureRect" parent="." unique_id=122489491]
+[node name="JoyStickPad" type="TextureRect" parent="Main" unique_id=122489491]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
@@ -26,7 +28,7 @@ offset_bottom = -64.0
 grow_vertical = 0
 texture = ExtResource("1_64ctp")
 
-[node name="JoyStickNub" type="TextureRect" parent="JoyStickPad" unique_id=1951762077]
+[node name="JoyStickNub" type="TextureRect" parent="Main/JoyStickPad" unique_id=1951762077]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
+[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://hud.tscn" id="3_g1dw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oul6g"]
 
@@ -26,3 +27,5 @@ size = 15.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1993697615]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
+
+[node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]

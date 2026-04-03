@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://kvux3lrcv1ao"]
 
 [ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="1_6xmxd"]
+[ext_resource type="Script" uid="uid://dj3ueyarvbygl" path="res://world/world.gd" id="1_4717r"]
 [ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="2_tcf2h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
@@ -17,6 +18,7 @@ background_mode = 2
 sky = SubResource("Sky_tcf2h")
 
 [node name="World" type="Node3D" unique_id=1944548304]
+script = ExtResource("1_4717r")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=702403821]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)

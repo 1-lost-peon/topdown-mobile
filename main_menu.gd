@@ -1,6 +1,6 @@
 extends Control
 
-signal screen_changed
+signal game_joined
 
 func _on_start_server_pressed() -> void:
 	NetworkHandling.start_server()
@@ -9,5 +9,5 @@ func _on_start_server_pressed() -> void:
 
 func _on_join_game_pressed() -> void:
 	NetworkHandling.start_client()
-	screen_changed.emit()
+	game_joined.emit()
 	queue_free()
