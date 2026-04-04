@@ -21,3 +21,4 @@ mono_crash.*.json
 *.jks
 *.apk
 *.aab
+debug_keystore_b64.txt
