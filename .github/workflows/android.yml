@@ -48,6 +48,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: build/game.apk
+          path: build/Android/game.apk
           if-no-files-found: error
           retention-days: 14
