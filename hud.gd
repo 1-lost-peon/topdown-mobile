@@ -11,7 +11,6 @@ var drag_vector: Vector2
 
 
 func _input(event: InputEvent) -> void:
-	print(drag_vector)
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			var center = joy_stick_nub.global_position + joy_stick_nub.size / 2.0

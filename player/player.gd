@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var hud: HUD = $HUD
+@onready var camera = $Camera3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -10,6 +11,8 @@ var direction: Vector3
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
+func _ready() -> void:
+	camera.current = is_multiplayer_authority()
 
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority(): return
