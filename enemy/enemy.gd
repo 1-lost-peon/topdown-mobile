@@ -9,4 +9,5 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
-	global_position = global_position.move_toward(players[0].global_position, 3 * delta)
+	if players:
+		global_position = global_position.move_toward(players[0].global_position, 3 * delta)
