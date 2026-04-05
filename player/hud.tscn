@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://8c0p424biava"]
 
-[ext_resource type="Script" uid="uid://cndtbek17g5xj" path="res://hud.gd" id="1_8sq4i"]
-[ext_resource type="Texture2D" uid="uid://bdlm2im76hwe1" path="res://joystick_circle_pad_a.png" id="1_64ctp"]
-[ext_resource type="Texture2D" uid="uid://cic47psu7jdvj" path="res://joystick_circle_nub_c.png" id="2_8sq4i"]
+[ext_resource type="Script" uid="uid://cndtbek17g5xj" path="res://player/hud.gd" id="1_8sq4i"]
+[ext_resource type="Texture2D" uid="uid://bdlm2im76hwe1" path="res://player/joystick_circle_pad_a.png" id="1_64ctp"]
+[ext_resource type="Texture2D" uid="uid://cic47psu7jdvj" path="res://player/joystick_circle_nub_c.png" id="2_8sq4i"]
 
 [node name="HUD" type="CanvasLayer" unique_id=670834492]
 script = ExtResource("1_8sq4i")

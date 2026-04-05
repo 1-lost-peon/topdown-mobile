@@ -10,6 +10,7 @@ var direction: Vector3
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	add_to_group("players")
 
 func _ready() -> void:
 	camera.current = is_multiplayer_authority()

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://hud.tscn" id="3_g1dw6"]
+[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://player/hud.tscn" id="3_g1dw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oul6g"]
 
@@ -11,7 +11,7 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" unique_id=548357737]
+[node name="Player" type="CharacterBody3D" unique_id=548357737 groups=["players"]]
 script = ExtResource("1_rkbax")
 
 [node name="Mannequin_Medium" parent="." unique_id=623490887 instance=ExtResource("1_oul6g")]

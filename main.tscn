@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://s4j5by34lruy"]
 
-[ext_resource type="PackedScene" uid="uid://hiuauehffhc6" path="res://gui.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://hiuauehffhc6" path="res://gui/gui.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://fiktp687khbc" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://kvux3lrcv1ao" path="res://world/world.tscn" id="2_h2yge"]
 

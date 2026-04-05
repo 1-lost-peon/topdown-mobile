@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="1_6xmxd"]
 [ext_resource type="Script" uid="uid://dj3ueyarvbygl" path="res://world/world.gd" id="1_4717r"]
+[ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="2_h5o24"]
 [ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="2_tcf2h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
@@ -19,6 +20,7 @@ sky = SubResource("Sky_tcf2h")
 
 [node name="World" type="Node3D" unique_id=1944548304]
 script = ExtResource("1_4717r")
+enemy = ExtResource("2_h5o24")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=702403821]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
@@ -63,3 +65,9 @@ _spawnable_scenes = PackedStringArray("uid://7dujjowjcp6r")
 spawn_path = NodePath("..")
 script = ExtResource("2_tcf2h")
 network_player = ExtResource("1_6xmxd")
+
+[node name="EnemyTimer" type="Timer" parent="." unique_id=622440351]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
