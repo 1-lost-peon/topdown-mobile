@@ -29,3 +29,9 @@ size = 15.0
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 
 [node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]
+
+[node name="RespawnTimer" type="Timer" parent="." unique_id=2113646791]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]

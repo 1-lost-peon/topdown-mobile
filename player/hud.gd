@@ -10,6 +10,14 @@ var max_distance := 192.0 # 3 * 64
 var drag_vector: Vector2
 
 
+#@rpc("any_peer", "call_remote", "unreliable")
+#func send_input(input_dir: Vector2) -> void:
+	#if multiplayer.get_remote_sender_id() != name.to_int():
+		#return
+	
+	#net_input = input_dir
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:

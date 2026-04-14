@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://clfwfgklsq505"]
+
+[ext_resource type="Texture2D" uid="uid://1thwsvf57h4y" path="res://world/prototype_textures/Dark/texture_01.png" id="1_kfa7i"]
+[ext_resource type="Script" uid="uid://dna1nk6ny4wky" path="res://world/test_level.gd" id="1_x27he"]
+[ext_resource type="Texture2D" uid="uid://cwv7ycfqp00l0" path="res://world/prototype_textures/Green/texture_01.png" id="2_x27he"]
+[ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="3_mmx4b"]
+[ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="4_yi58r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
+albedo_texture = ExtResource("1_kfa7i")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
+albedo_texture = ExtResource("2_x27he")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6xmxd"]
+sky_top_color = Color(0.99333334, 1, 0.9, 1)
+
+[sub_resource type="Sky" id="Sky_tcf2h"]
+sky_material = SubResource("ProceduralSkyMaterial_6xmxd")
+
+[sub_resource type="Environment" id="Environment_4717r"]
+background_mode = 2
+sky = SubResource("Sky_tcf2h")
+
+[node name="TestLevel" type="Node3D" unique_id=1427648148]
+script = ExtResource("1_x27he")
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=704543413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_ai45w")
+
+[node name="Obstacle1" type="CSGBox3D" parent="." unique_id=2137229708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle2" type="CSGBox3D" parent="." unique_id=1889662134]
+transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 0, 1, 23.883976)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle3" type="CSGBox3D" parent="." unique_id=579077041]
+transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 16.946556, 1, 16.84431)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle4" type="CSGBox3D" parent="." unique_id=769809415]
+transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, 16.946556, 1, -29.600262)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle5" type="CSGBox3D" parent="." unique_id=1867844027]
+transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, -32.04898, 1, 0.37167358)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1354992400]
+environment = SubResource("Environment_4717r")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=744651351]
+_spawnable_scenes = PackedStringArray("uid://7dujjowjcp6r")
+spawn_path = NodePath("../..")
+script = ExtResource("3_mmx4b")
+network_player = ExtResource("4_yi58r")
+
+[node name="EnemyTimer" type="Timer" parent="." unique_id=625124317]
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnLocations" type="Node" parent="." unique_id=1565292278]
+
+[node name="SpawnLocation1" type="Node3D" parent="SpawnLocations" unique_id=82789354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.846046, 0, 11.17248)
+
+[node name="SpawnLocation2" type="Node3D" parent="SpawnLocations" unique_id=1830846225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.783104, 0, 22.12589)
+
+[node name="SpawnLocation3" type="Node3D" parent="SpawnLocations" unique_id=785664803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4694, 0, -24.368353)
+
+[node name="SpawnLocation4" type="Node3D" parent="SpawnLocations" unique_id=764191792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.3543, 0, -31.52131)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189167663]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 5, 0)
+shadow_enabled = true

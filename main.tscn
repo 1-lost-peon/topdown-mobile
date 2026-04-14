@@ -8,5 +8,9 @@
 script = ExtResource("1_h2yge")
 
 [node name="GUI" parent="." unique_id=285665816 instance=ExtResource("1_0xm2m")]
+unique_name_in_owner = true
 
 [node name="World" parent="." unique_id=1944548304 instance=ExtResource("2_h2yge")]
+unique_name_in_owner = true
+
+[connection signal="entered_main_menu" from="GUI" to="." method="_on_gui_entered_main_menu"]

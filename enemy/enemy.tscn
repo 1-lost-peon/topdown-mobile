@@ -10,6 +10,9 @@ albedo_color = Color(0, 0.98039216, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ofsxj"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ofsxj"]
+radius = 2.0
+
 [node name="Enemy" type="Node3D" unique_id=1600896374]
 script = ExtResource("1_ofsxj")
 
@@ -25,3 +28,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ppra6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=466680448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ofsxj")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1418906879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9074302, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1339788403]
+shape = SubResource("SphereShape3D_ofsxj")
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

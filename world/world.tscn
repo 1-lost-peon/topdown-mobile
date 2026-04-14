@@ -1,73 +1,10 @@
 [gd_scene format=3 uid="uid://kvux3lrcv1ao"]
 
-[ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="1_6xmxd"]
 [ext_resource type="Script" uid="uid://dj3ueyarvbygl" path="res://world/world.gd" id="1_4717r"]
 [ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="2_h5o24"]
-[ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="2_tcf2h"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
-albedo_color = Color(0, 0.99215686, 0, 1)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6xmxd"]
-sky_top_color = Color(0.99333334, 1, 0.9, 1)
-
-[sub_resource type="Sky" id="Sky_tcf2h"]
-sky_material = SubResource("ProceduralSkyMaterial_6xmxd")
-
-[sub_resource type="Environment" id="Environment_4717r"]
-background_mode = 2
-sky = SubResource("Sky_tcf2h")
+[ext_resource type="PackedScene" uid="uid://clfwfgklsq505" path="res://world/test_level.tscn" id="3_4717r"]
 
 [node name="World" type="Node3D" unique_id=1944548304]
 script = ExtResource("1_4717r")
 enemy = ExtResource("2_h5o24")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=702403821]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
-use_collision = true
-size = Vector3(100, 1, 100)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1289780089]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=587268953]
-transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 0, 1, 23.883976)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=773584266]
-transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 16.946556, 1, 16.84431)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=456062080]
-transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, 16.946556, 1, -29.600262)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1570126687]
-transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, -32.04898, 1, 0.37167358)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2013126949]
-environment = SubResource("Environment_4717r")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2046755429]
-_spawnable_scenes = PackedStringArray("uid://7dujjowjcp6r")
-spawn_path = NodePath("..")
-script = ExtResource("2_tcf2h")
-network_player = ExtResource("1_6xmxd")
-
-[node name="EnemyTimer" type="Timer" parent="." unique_id=622440351]
-wait_time = 5.0
-autostart = true
-
-[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]
+level_scene = ExtResource("3_4717r")
