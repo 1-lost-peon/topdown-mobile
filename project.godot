@@ -18,14 +18,20 @@ config/icon="res://icon.svg"
 [autoload]
 
 NetworkHandling="*uid://vplaoa4vmc1d"
-Lobby="*uid://clkvhg155ebrf"
+TileRunInstancesGlobal="*uid://b6fg6pu2bfi14"
 
 [display]
 
-window/size/viewport_width=1270
+window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/window_width_override=720
+window/size/window_height_override=405
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/tile-run-instances/plugin.cfg")
 
 [global_group]
 

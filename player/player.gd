@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
-@onready var hud: HUD = $HUD
+@onready var mannequin_medium: Node3D = $Mannequin_Medium
 @onready var camera = $Camera3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
+@onready var hud: HUD = $HUD
 @onready var respawn_timer: Timer = $RespawnTimer
+@onready var nameplate: Label3D = $Nameplate
 
 signal player_died
 
@@ -23,7 +25,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if is_multiplayer_authority():
 		camera.current = true
-	
+	nameplate.text = name
+	nameplate.modulate = Color(0x8aff00ff)
 	respawn_timer.timeout.emit()
 
 
@@ -43,6 +46,13 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		
+		var target_angle = atan2(direction.x, direction.z)
+		mannequin_medium.rotation.y = lerp_angle(
+			mannequin_medium.rotation.y,
+			target_angle,
+			10.0 * delta
+		)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
