@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 NetworkHandling="*uid://vplaoa4vmc1d"
 TileRunInstancesGlobal="*uid://b6fg6pu2bfi14"
+Network="*uid://dms0cp6chwt3k"
 
 [display]
 

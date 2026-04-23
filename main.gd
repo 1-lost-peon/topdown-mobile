@@ -5,7 +5,8 @@ extends Node
 
 func _ready() -> void:
 	if OS.has_feature("server"):
-		NetworkHandling.start_server()
+		#NetworkHandling.start_server()
+		Network.create_game()
 		world.spawn_level()
 		gui.main_menu.queue_free()
 	else:

@@ -28,6 +28,7 @@ func start_server() -> void:
 	
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(add_player)
+	multiplayer.peer_disconnected.connect(remove_player)
 	
 	log_message("Server started")
 	log_message("Local Server IP: ", ip_address)
@@ -49,21 +50,32 @@ func join_server(ip: String) -> void:
 
 	multiplayer.multiplayer_peer = peer
 
-
+# This only runs on the server...
 func add_player(peer_id: int) -> void:
-	if !multiplayer.is_server():
-		return
-	var world: Node = get_tree().current_scene.world
+	#if multiplayer.is_server():
+		#return
 	if peer_id == 1:
 		return
 	
+	var world: Node = get_tree().current_scene.world
+	
 	log_message("Player", peer_id, "joining...")
 	
-	log_message("add_player called for peer", peer_id, "on server=", multiplayer.is_server())
 	#log_message("Spawning player ", peer_id, " under ", get_path())
 	var new_player = PLAYER.instantiate()
 	new_player.name = str(peer_id)
+	print("SPAWN LOCATIONS", world.level.spawn_locations)
+	new_player.spawn_locations = world.level.spawn_locations
+	
+	var x = randf_range(-5.0, 5.0)
+	var z = randf_range(-5.0, 5.0)
+	
+	
 	world.add_child(new_player, true)
+	#new_player.global_position = Vector3(x, 1.0, z)
+	new_player.position = world.level.get_spawn_location()
+	var player_node = world.get_node(str(peer_id))
+	log_message("Actual position:", player_node.position)
 	
 	log_message("Player", peer_id, "joined.")
 

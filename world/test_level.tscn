@@ -5,14 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://cwv7ycfqp00l0" path="res://world/prototype_textures/Green/texture_01.png" id="2_x27he"]
 [ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="3_mmx4b"]
 [ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="4_yi58r"]
+[ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="6_mmx4b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
 albedo_texture = ExtResource("1_kfa7i")
-uv1_scale = Vector3(0.5, 0.5, 0.5)
-uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
-albedo_texture = ExtResource("2_x27he")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
@@ -26,6 +22,13 @@ sky_material = SubResource("ProceduralSkyMaterial_6xmxd")
 background_mode = 2
 sky = SubResource("Sky_tcf2h")
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_x27he"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
+albedo_texture = ExtResource("2_x27he")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
 [node name="TestLevel" type="Node3D" unique_id=1427648148]
 script = ExtResource("1_x27he")
 
@@ -34,36 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
 use_collision = true
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_ai45w")
-
-[node name="Obstacle1" type="CSGBox3D" parent="." unique_id=2137229708]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="Obstacle2" type="CSGBox3D" parent="." unique_id=1889662134]
-transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 0, 1, 23.883976)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="Obstacle3" type="CSGBox3D" parent="." unique_id=579077041]
-transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, 16.946556, 1, 16.84431)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="Obstacle4" type="CSGBox3D" parent="." unique_id=769809415]
-transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, 16.946556, 1, -29.600262)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
-
-[node name="Obstacle5" type="CSGBox3D" parent="." unique_id=1867844027]
-transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, -32.04898, 1, 0.37167358)
-use_collision = true
-size = Vector3(30, 1, 1)
-material = SubResource("StandardMaterial3D_tcf2h")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1354992400]
 environment = SubResource("Environment_4717r")
@@ -81,17 +54,160 @@ autostart = true
 [node name="SpawnLocations" type="Node" parent="." unique_id=1565292278]
 
 [node name="SpawnLocation1" type="Node3D" parent="SpawnLocations" unique_id=82789354]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.846046, 0, 11.17248)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation1" unique_id=1083271675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
 
 [node name="SpawnLocation2" type="Node3D" parent="SpawnLocations" unique_id=1830846225]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.783104, 0, 22.12589)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation2" unique_id=1535402769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
 
 [node name="SpawnLocation3" type="Node3D" parent="SpawnLocations" unique_id=785664803]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4694, 0, -24.368353)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation3" unique_id=1883586459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
 
 [node name="SpawnLocation4" type="Node3D" parent="SpawnLocations" unique_id=764191792]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.3543, 0, -31.52131)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation4" unique_id=1678590078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189167663]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 5, 0)
 shadow_enabled = true
+
+[node name="Walls" type="Node3D" parent="." unique_id=1347534389]
+
+[node name="Obstacle1" type="CSGBox3D" parent="Walls" unique_id=2137229708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 1, 29)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle8" type="CSGBox3D" parent="Walls" unique_id=2051135772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 50)
+use_collision = true
+size = Vector3(100, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle10" type="CSGBox3D" parent="Walls" unique_id=229032655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -50)
+use_collision = true
+size = Vector3(100, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle2" type="CSGBox3D" parent="Walls" unique_id=1889662134]
+transform = Transform3D(0.013735354, 0, -0.99990565, 0, 1, 0, 0.99990565, 0, 0.013735354, -22, 1, 21.883976)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle6" type="CSGBox3D" parent="Walls" unique_id=1473342475]
+transform = Transform3D(0.013735354, 0, -0.99990565, 0, 1, 0, 0.99990565, 0, 0.013735354, -22.14422, 1, 45.384968)
+use_collision = true
+size = Vector3(9, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle7" type="CSGBox3D" parent="Walls" unique_id=1450028456]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -50.76231, 1, 0.38921165)
+use_collision = true
+size = Vector3(99, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle9" type="CSGBox3D" parent="Walls" unique_id=70248505]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 49.23769, 1, 0.38921165)
+use_collision = true
+size = Vector3(99, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle3" type="CSGBox3D" parent="Walls" unique_id=579077041]
+transform = Transform3D(0.7167524, 0, -0.69732773, 0, 1, 0, 0.69732773, 0, 0.7167524, -7.7123346, 1, 39.31168)
+use_collision = true
+size = Vector3(17, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle4" type="CSGBox3D" parent="Walls" unique_id=769809415]
+transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, 11.946556, 1, 39.39974)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle5" type="CSGBox3D" parent="Walls" unique_id=1867844027]
+transform = Transform3D(-0.93565357, 0, -0.3529198, 0, 1, 0, 0.3529198, 0, -0.93565357, -7.0489807, 1, 23.371674)
+use_collision = true
+size = Vector3(30, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle11" type="CSGBox3D" parent="Walls" unique_id=1365246700]
+transform = Transform3D(-0.9867598, 0, 0.1621893, 0, 1, 0, -0.1621893, 0, -0.9867598, 17.49736, 1, 19.80401)
+use_collision = true
+size = Vector3(23, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle12" type="CSGBox3D" parent="Walls" unique_id=774087271]
+transform = Transform3D(-0.9867598, 0, 0.1621893, 0, 1, 0, -0.1621893, 0, -0.9867598, 16.775404, 1, 1.398035)
+use_collision = true
+size = Vector3(65, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Obstacle13" type="CSGBox3D" parent="Walls" unique_id=1648334188]
+transform = Transform3D(-0.93565387, 0, -0.35291988, 0, 1, 0, 0.35291988, 0, -0.93565387, -25.569786, 1, 0.44531822)
+use_collision = true
+size = Vector3(24, 1, 1)
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Enemies" type="Node3D" parent="." unique_id=400374355]
+
+[node name="Enemy1" parent="Enemies" unique_id=1600896374 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 40)
+
+[node name="Enemy2" parent="Enemies" unique_id=337731819 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 48)
+
+[node name="Enemy3" parent="Enemies" unique_id=1203530200 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 46)
+
+[node name="Enemy4" parent="Enemies" unique_id=1395960331 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 31)
+
+[node name="Enemy5" parent="Enemies" unique_id=1858516420 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 22)
+
+[node name="Enemy6" parent="Enemies" unique_id=1907213429 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 45)
+
+[node name="Enemy7" parent="Enemies" unique_id=1613408491 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 22)
+
+[node name="Enemy8" parent="Enemies" unique_id=1921855570 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 0, 16)
+
+[node name="Enemy9" parent="Enemies" unique_id=700237246 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+
+[node name="Enemy10" parent="Enemies" unique_id=628712521 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 9)
+
+[node name="Enemy11" parent="Enemies" unique_id=830119164 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 7)
+
+[node name="Enemy12" parent="Enemies" unique_id=289581989 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 24)
+
+[node name="Enemy13" parent="Enemies" unique_id=1655780110 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 25)
+
+[node name="Enemy14" parent="Enemies" unique_id=377435156 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 21)
+
+[node name="Enemy15" parent="Enemies" unique_id=364555899 instance=ExtResource("6_mmx4b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, -2)

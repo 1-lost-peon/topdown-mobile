@@ -10,7 +10,7 @@ func spawn_level() -> void:
 	level = level_scene.instantiate()	
 	#level.name = str(peer_id)
 	add_child(level, true)
-	NetworkHandling.log_message("World spawned in")
+	#NetworkHandling.log_message("World spawned in")
 
 #func _ready() -> void:
 	#spawn_level()

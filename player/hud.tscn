@@ -40,3 +40,123 @@ offset_right = 192.0
 offset_bottom = -64.0
 grow_vertical = 0
 texture = ExtResource("2_8sq4i")
+
+[node name="Label" type="Label" parent="Main" unique_id=1693330711]
+layout_mode = 1
+offset_left = 47.0
+offset_top = 25.0
+offset_right = 318.0
+offset_bottom = 70.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "123"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Main" unique_id=55363585]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -113.0
+offset_right = -29.0
+offset_bottom = 104.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0.34407577, 0.34407574, 0.34407574, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/ColorRect" unique_id=1423787335]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/ColorRect/VBoxContainer" unique_id=1798420633]
+layout_mode = 2
+
+[node name="Number1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer" unique_id=2044238967]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer" unique_id=152943328]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Main/ColorRect/VBoxContainer" unique_id=864979923]
+layout_mode = 2
+
+[node name="Number1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer2" unique_id=1438586915]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer2" unique_id=1710269901]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Main/ColorRect/VBoxContainer" unique_id=1000547378]
+layout_mode = 2
+
+[node name="Number1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer3" unique_id=680387533]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer3" unique_id=825607745]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Main/ColorRect/VBoxContainer" unique_id=1642673890]
+layout_mode = 2
+
+[node name="Number1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer4" unique_id=2146334046]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player1" type="Label" parent="Main/ColorRect/VBoxContainer/HBoxContainer4" unique_id=1822318796]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 32
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1

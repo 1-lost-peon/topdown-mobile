@@ -14,7 +14,7 @@ func _on_start_server_pressed() -> void:
 
 func _on_join_game_pressed() -> void:
 	#NetworkHandling.start_client()
-	if line_edit.text != "":
-		NetworkHandling.join_server(line_edit.text)
-		game_joined.emit()
-		queue_free()
+		#NetworkHandling.join_server(line_edit.text)
+	Network.join_game(line_edit.text)
+	game_joined.emit()
+	queue_free()
