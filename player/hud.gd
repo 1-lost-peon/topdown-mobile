@@ -1,27 +1,54 @@
 extends CanvasLayer
 class_name HUD
 
-@onready var joy_stick_nub: TextureRect = %JoyStickNub
-@onready var joy_stick_pad: TextureRect = %JoyStickPad
+enum JoystickType {
+	MOVEMENT,
+	ATTACK
+}
+
+var joystick_data := {
+	JoystickType.MOVEMENT: {
+		"pad": null,
+		"nub": null,
+		"default_position": Vector2.ZERO,
+		"active": -1,
+		"input_direction": Vector2.ZERO,
+		"input_strength": 0.0,
+	},
+	JoystickType.ATTACK: {
+		"pad": null,
+		"nub": null,
+		"default_position": Vector2.ZERO,
+		"active": -1,
+		"input_direction": Vector2.ZERO,
+		"input_strength": 0.0,
+	}
+}
+
+@onready var movement_joy_stick_nub: TextureRect = %JoyStickNub
+@onready var movement_joy_stick_pad: TextureRect = %JoyStickPad
+@onready var attack_joy_stick_nub: TextureRect = $Main/AttackPad/AttackNub
+@onready var attack_joy_stick_pad: TextureRect = $Main/AttackPad
 
 var default_position := Vector2(64, 64)
 var active_touch := -1
 var max_distance := 192.0 # 3 * 64
-var drag_vector: Vector2
+var movement_drag_vector: Vector2
+var attack_drag_vector: Vector2
 @onready var v_box_container: VBoxContainer = $Main/ColorRect/VBoxContainer
 var player_count: int = 0
 @onready var label: Label = $Main/Label
 
-#@rpc("any_peer", "call_remote", "unreliable")
-#func send_input(input_dir: Vector2) -> void:
-	#if multiplayer.get_remote_sender_id() != name.to_int():
-		#return
-	
-	#net_input = input_dir
-
 func _ready() -> void:
 	Network.player_connected.connect(_on_player_connected)
 	label.text = str(multiplayer.get_unique_id())
+	joystick_data[JoystickType.MOVEMENT]["pad"] = movement_joy_stick_pad
+	joystick_data[JoystickType.MOVEMENT]["nub"] = movement_joy_stick_nub
+	joystick_data[JoystickType.MOVEMENT]["default_position"] = movement_joy_stick_nub.position
+
+	joystick_data[JoystickType.ATTACK]["pad"] = attack_joy_stick_pad
+	joystick_data[JoystickType.ATTACK]["nub"] = attack_joy_stick_nub
+	joystick_data[JoystickType.ATTACK]["default_position"] = attack_joy_stick_nub.position
 
 func _on_player_connected(peer_id, player_info) -> void:
 	var rows = v_box_container.get_children()
@@ -36,42 +63,101 @@ func _on_player_connected(peer_id, player_info) -> void:
 	player_count += 1
 
 
-
 func _input(event: InputEvent) -> void:
 	if multiplayer.get_unique_id() == 1:
 		return
 	
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			var center = joy_stick_nub.global_position + joy_stick_nub.size / 2.0
-			var radius = joy_stick_nub.size.x / 2.0
-			
-			if event.position.distance_to(center) <= radius:
-				active_touch = event.index
+			check_joy_stick_active(JoystickType.MOVEMENT, event)
+			check_joy_stick_active(JoystickType.ATTACK, event)
+			#var joy_stick_center = joy_stick_nub.global_position + joy_stick_nub.size / 2.0
+			#var joy_stick_radius = joy_stick_nub.size.x / 2.0
+			#
+			#if event.position.distance_to(joy_stick_center) <= joy_stick_radius:
+				#active_touch = event.index
 		else:
-			if event.index == active_touch:
-				drag_vector = Vector2.ZERO
-				active_touch = -1
-				create_tween().tween_property(joy_stick_nub, "position", default_position, 0.08)
-		
+			reset_joystick_active(JoystickType.MOVEMENT, event)
+			reset_joystick_active(JoystickType.ATTACK, event)
+			# reset_joy_stick_input("movement")
+			# reset_joy_stick_input("attack")
+			#if event.index == active_touch:
+				#movement_drag_vector = Vector2.ZERO
+				#active_touch = -1
+				#create_tween().tween_property(joy_stick_nub, "position", default_position, 0.08)
+
 	elif event is InputEventScreenDrag:
-		if event.index == active_touch:
-			var base_center = joy_stick_pad.global_position + joy_stick_pad.size / 2.0
-			drag_vector = event.position - base_center
-		
-			if drag_vector.length() > max_distance:
-				drag_vector = drag_vector.normalized() * max_distance
-			
-			joy_stick_nub.global_position = base_center + drag_vector - joy_stick_nub.size / 2.0
-	
-	send_movement_input.rpc_id(1, drag_vector) # send movement input to server	 
-	
+		update_joystick_drag(JoystickType.MOVEMENT, event)
+		update_joystick_drag(JoystickType.ATTACK, event)
+		#if event.index == active_touch:
+			#var base_center = joy_stick_pad.global_position + joy_stick_pad.size / 2.0
+			#movement_drag_vector = event.position - base_center
+		#
+			#if movement_drag_vector.length() > max_distance:
+				#movement_drag_vector = movement_drag_vector.normalized() * max_distance
+			#
+			#joy_stick_nub.global_position = base_center + movement_drag_vector - joy_stick_nub.size / 2.0
+	#var movement_vector: Vector2 = joystick_data[JoystickType.MOVEMENT]["input_direction"]
+	#var input_strength: float = joystick_data[JoystickType.MOVEMENT]["input_strength"]
+	send_movement_input.rpc_id(1, joystick_data) # send movement input to server
+	send_movement_input.rpc_id(multiplayer.get_unique_id(), joystick_data) # send movement input to server
 
 
-@rpc("any_peer", "reliable")
-func send_movement_input(dir: Vector2) -> void:
-	if !multiplayer.is_server():
+func check_joy_stick_active(type: JoystickType, event: InputEventScreenTouch) -> void:
+	var joystick = joystick_data[type]
+	var nub: Control = joystick["nub"]
+
+	var center = nub.global_position + nub.size / 2.0
+	var radius = nub.size.x / 2.0
+
+	if event.position.distance_to(center) <= radius:
+		joystick["active"] = event.index
+
+
+func reset_joystick_active(type: JoystickType, event: InputEventScreenTouch) -> void:
+	var joystick = joystick_data[type]
+	var nub: Control = joystick["nub"]
+
+	if event.index == joystick["active"]:
+		joystick["input_direction"] = Vector2.ZERO
+		joystick["active"] = -1
+		create_tween().tween_property(
+			nub,
+			"position",
+			joystick["default_position"],
+			0.08
+		)
+
+
+func update_joystick_drag(type: JoystickType, event: InputEventScreenDrag) -> void:
+	var joystick = joystick_data[type]
+
+	if event.index != joystick["active"]:
 		return
+
+	var pad: Control = joystick["pad"]
+	var nub: Control = joystick["nub"]
+
+	var base_center = pad.global_position + pad.size / 2.0
+	var drag_vector = event.position - base_center
+
+	if drag_vector.length() > max_distance:
+		drag_vector = drag_vector.normalized() * max_distance
+
+	var strength := drag_vector.length() / max_distance
+	
+	joystick["input_direction"] = drag_vector
+	joystick["input_strength"] = strength
+	nub.global_position = base_center + drag_vector - nub.size / 2.0
+
+
+@rpc("any_peer", "call_local", "reliable")
+func send_movement_input(new_joystick_data) -> void:
+	#if !multiplayer.is_server():
+		#return	
+	var movement_direction: Vector2 = new_joystick_data[JoystickType.MOVEMENT]["input_direction"]
+	var movement_strength: float = new_joystick_data[JoystickType.MOVEMENT]["input_strength"]
+	var attack_direction: Vector2 = new_joystick_data[JoystickType.ATTACK]["input_direction"]
 
 	var sender_id := multiplayer.get_remote_sender_id()
 	var players = get_tree().get_nodes_in_group("players")
@@ -80,4 +166,4 @@ func send_movement_input(dir: Vector2) -> void:
 		#print(p.name)
 		if p.name == str(sender_id):
 			player = p
-	player.apply_input(dir)
+	player.apply_input(movement_direction, movement_strength, attack_direction)

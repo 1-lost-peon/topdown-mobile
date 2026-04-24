@@ -13,12 +13,26 @@ var player_info = {"name": "Name"}
 
 var players_loaded = 0
 
+var ip_address: String = get_local_lan_ip()
+
+
+
 func _ready():
 	multiplayer.peer_connected.connect(_on_player_connected) # Happens on existing clients
 	#multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_ok) # Happens locally...
 	#multiplayer.connection_failed.connect(_on_connected_fail)
 	#multiplayer.server_disconnected.connect(_on_server_disconnected)
+
+func get_local_lan_ip() -> String:
+	var interfaces = IP.get_local_interfaces()
+	for iface in interfaces:
+		var friendly := str(iface.get("friendly", "")).to_lower()
+		var addresses = iface.get("addresses", [])
+		if "wi-fi" in friendly or "wifi" in friendly or "wlan" in friendly or "wireless" in friendly:
+			return addresses[1]
+		
+	return "127.0.0.1"
 
 func join_game(address = ""):
 	if address.is_empty():
@@ -42,6 +56,7 @@ func create_game():
 	player_connected.emit(1, player_info)
 	
 	log_message("Server created.")
+	log_message("Local Server IP: ", ip_address)
 
 func _on_connected_ok():
 	#print("")
