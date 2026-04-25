@@ -58,6 +58,7 @@ func create_game():
 	log_message("Server created.")
 	log_message("Local Server IP: ", ip_address)
 
+
 func _on_connected_ok():
 	#print("")
 	#print("_on_connected_ok; from id ", multiplayer.get_unique_id())
@@ -66,6 +67,7 @@ func _on_connected_ok():
 	player_connected.emit(peer_id, player_info)
 	#print(multiplayer.get_unique_id())
 	log_message("Player", multiplayer.get_unique_id(), "has succesfully connected to the server.")
+
 
 func _on_player_connected(id):
 	log_message("Player", multiplayer.get_unique_id(), "has connected to", id)
@@ -84,6 +86,7 @@ func _register_player(new_player_info):
 	log_message("Player", multiplayer.get_unique_id(), "has updated its player list", players)
 	if multiplayer.get_remote_sender_id() == 1:
 		_spawn_player.rpc_id(1, player_info)
+
 
 @rpc("any_peer", "call_local", "reliable")
 func _spawn_player(new_player_info):

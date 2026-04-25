@@ -3,8 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://player/hud.tscn" id="3_g1dw6"]
-[ext_resource type="Shader" uid="uid://cb5bsoduh4utj" path="res://player/player_circle.gdshader" id="4_yw30f"]
-[ext_resource type="Shader" uid="uid://le7u1r5qmlv8" path="res://player/aim_shader.gdshader" id="5_qjkh3"]
 [ext_resource type="Shader" uid="uid://hqg0wjbda6ft" path="res://player/movement_indicator.gdshader" id="6_g6k8r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oul6g"]
@@ -25,9 +23,41 @@ properties/3/replication_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qjkh3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6k8r"]
+[sub_resource type="Shader" id="Shader_yw30f"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
+
+uniform vec4 outline_color : source_color = vec4(0.1, 1.0, 0.15, 1.0);
+uniform vec4 center_color : source_color = vec4(1.0, 1.0, 1.0, 0.2);
+uniform float radius = 0.42;
+uniform float outline_width = 0.06;
+uniform float glow_width = 0.08;
+
+void fragment() {
+	vec2 uv = UV - vec2(0.5);
+	float dist = length(uv);
+
+	float circle = smoothstep(radius, radius - 0.01, dist);
+	float outline = smoothstep(radius, radius - 0.01, dist)
+		- smoothstep(radius - outline_width, radius - outline_width - 0.01, dist);
+
+	float glow = smoothstep(radius + glow_width, radius, dist) * 0.35;
+
+	vec4 col = center_color;
+	col = mix(col, outline_color, outline);
+	col.rgb += outline_color.rgb * glow;
+
+	col.a *= circle;
+	col.a = max(col.a, outline * outline_color.a);
+	col.a += glow * outline_color.a * outline;
+
+	ALBEDO = col.rgb;
+	ALPHA = col.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjkh3"]
 render_priority = 0
-shader = ExtResource("4_yw30f")
+shader = SubResource("Shader_yw30f")
 shader_parameter/outline_color = Color(0.45, 1, 0.65, 0.7)
 shader_parameter/center_color = Color(1, 1, 1, 0.28)
 shader_parameter/radius = 0.42
@@ -44,9 +74,44 @@ shader_parameter/radius = 0.32
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g6k8r"]
 
+[sub_resource type="Shader" id="Shader_g6k8r"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
+
+uniform vec4 rect_color : source_color = vec4(0.65, 0.68, 0.70, 0.35);
+
+uniform float max_width = 0.0;
+uniform float width = 0.5;
+uniform float height = 0.04;
+uniform float radius = 0.02;
+uniform float edge_softness = 0.01;
+
+float rounded_box(vec2 p, vec2 half_size, float r) {
+	vec2 q = abs(p) - half_size + vec2(r);
+	return length(max(q, 0.0)) - r;
+}
+
+void fragment() {
+	vec2 p = UV - vec2(0.5);
+
+	// Right side anchored, shrinks inward toward center/left
+	p.x -= (max_width - width) * 0.5;
+
+	float d = rounded_box(
+		p,
+		vec2(width * 0.5, height * 0.5),
+		radius
+	);
+
+	float alpha = smoothstep(edge_softness, -edge_softness, d);
+
+	ALBEDO = rect_color.rgb;
+	ALPHA = rect_color.a * alpha;
+}"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_boad6"]
 render_priority = 0
-shader = ExtResource("5_qjkh3")
+shader = SubResource("Shader_g6k8r")
 shader_parameter/rect_color = Color(0.65, 0.68, 0.7, 0.35)
 shader_parameter/max_width = 0.0
 shader_parameter/width = 0.5
@@ -88,7 +153,7 @@ outline_size = 24
 [node name="PlayerCircle" type="MeshInstance3D" parent="." unique_id=1522762037]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 mesh = SubResource("PlaneMesh_qjkh3")
-surface_material_override/0 = SubResource("ShaderMaterial_g6k8r")
+surface_material_override/0 = SubResource("ShaderMaterial_qjkh3")
 
 [node name="MovementIndicator" type="MeshInstance3D" parent="PlayerCircle" unique_id=1575729262]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 1.0254577)

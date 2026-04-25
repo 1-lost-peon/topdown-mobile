@@ -32,7 +32,8 @@ var joystick_data := {
 
 var default_position := Vector2(64, 64)
 var active_touch := -1
-var max_distance := 192.0 # 3 * 64
+#var max_distance := 192.0 # 3 * 64
+var max_distance := 64 * 2 # 3 * 64
 var movement_drag_vector: Vector2
 var attack_drag_vector: Vector2
 @onready var v_box_container: VBoxContainer = $Main/ColorRect/VBoxContainer
@@ -71,34 +72,15 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:
 			check_joy_stick_active(JoystickType.MOVEMENT, event)
 			check_joy_stick_active(JoystickType.ATTACK, event)
-			#var joy_stick_center = joy_stick_nub.global_position + joy_stick_nub.size / 2.0
-			#var joy_stick_radius = joy_stick_nub.size.x / 2.0
-			#
-			#if event.position.distance_to(joy_stick_center) <= joy_stick_radius:
-				#active_touch = event.index
+
 		else:
 			reset_joystick_active(JoystickType.MOVEMENT, event)
 			reset_joystick_active(JoystickType.ATTACK, event)
-			# reset_joy_stick_input("movement")
-			# reset_joy_stick_input("attack")
-			#if event.index == active_touch:
-				#movement_drag_vector = Vector2.ZERO
-				#active_touch = -1
-				#create_tween().tween_property(joy_stick_nub, "position", default_position, 0.08)
 
 	elif event is InputEventScreenDrag:
 		update_joystick_drag(JoystickType.MOVEMENT, event)
 		update_joystick_drag(JoystickType.ATTACK, event)
-		#if event.index == active_touch:
-			#var base_center = joy_stick_pad.global_position + joy_stick_pad.size / 2.0
-			#movement_drag_vector = event.position - base_center
-		#
-			#if movement_drag_vector.length() > max_distance:
-				#movement_drag_vector = movement_drag_vector.normalized() * max_distance
-			#
-			#joy_stick_nub.global_position = base_center + movement_drag_vector - joy_stick_nub.size / 2.0
-	#var movement_vector: Vector2 = joystick_data[JoystickType.MOVEMENT]["input_direction"]
-	#var input_strength: float = joystick_data[JoystickType.MOVEMENT]["input_strength"]
+	
 	send_movement_input.rpc_id(1, joystick_data) # send movement input to server
 	send_movement_input.rpc_id(multiplayer.get_unique_id(), joystick_data) # send movement input to server
 
@@ -158,6 +140,8 @@ func send_movement_input(new_joystick_data) -> void:
 	var movement_direction: Vector2 = new_joystick_data[JoystickType.MOVEMENT]["input_direction"]
 	var movement_strength: float = new_joystick_data[JoystickType.MOVEMENT]["input_strength"]
 	var attack_direction: Vector2 = new_joystick_data[JoystickType.ATTACK]["input_direction"]
+	var attack_strength: float = new_joystick_data[JoystickType.ATTACK]["input_strength"]
+
 
 	var sender_id := multiplayer.get_remote_sender_id()
 	var players = get_tree().get_nodes_in_group("players")
@@ -166,4 +150,5 @@ func send_movement_input(new_joystick_data) -> void:
 		#print(p.name)
 		if p.name == str(sender_id):
 			player = p
-	player.apply_input(movement_direction, movement_strength, attack_direction)
+	if player:
+		player.apply_input(movement_direction, movement_strength, attack_direction, attack_strength)
