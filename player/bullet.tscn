@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bdfadus56fvw8"]
+
+[ext_resource type="Script" uid="uid://cppto1qb1jbuk" path="res://player/bullet.gd" id="1_1y6ct"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_6bq6f"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1y6ct"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1y6ct"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Bullet" type="Node3D" unique_id=701886514]
+script = ExtResource("1_1y6ct")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=935452746]
+mesh = SubResource("SphereMesh_6bq6f")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=926478763]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2086959438]
+shape = SubResource("SphereShape3D_1y6ct")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=710027144]
+replication_config = SubResource("SceneReplicationConfig_1y6ct")

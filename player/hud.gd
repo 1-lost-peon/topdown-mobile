@@ -101,6 +101,17 @@ func reset_joystick_active(type: JoystickType, event: InputEventScreenTouch) -> 
 	var nub: Control = joystick["nub"]
 
 	if event.index == joystick["active"]:
+		if type == JoystickType.ATTACK:
+			var direction: Vector2 = joystick["input_direction"].normalized()
+			var strength: float = joystick["input_strength"]
+			
+			if strength <= 0.3:
+				shoot_request.rpc_id(1)
+			elif direction != Vector2.ZERO:
+				shoot_request.rpc_id(1)
+
+		
+		
 		joystick["input_direction"] = Vector2.ZERO
 		joystick["active"] = -1
 		create_tween().tween_property(
@@ -131,6 +142,19 @@ func update_joystick_drag(type: JoystickType, event: InputEventScreenDrag) -> vo
 	joystick["input_direction"] = drag_vector
 	joystick["input_strength"] = strength
 	nub.global_position = base_center + drag_vector - nub.size / 2.0
+
+
+@rpc("any_peer", "call_local", "reliable")
+func shoot_request() -> void:
+	var sender_id := multiplayer.get_remote_sender_id()
+	var players = get_tree().get_nodes_in_group("players")
+	var player: CharacterBody3D
+	for p in players:
+		#print(p.name)
+		if p.name == str(sender_id):
+			player = p
+	if player:
+		player.shoot()
 
 
 @rpc("any_peer", "call_local", "reliable")

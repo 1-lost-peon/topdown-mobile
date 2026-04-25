@@ -3,8 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://1thwsvf57h4y" path="res://world/prototype_textures/Dark/texture_01.png" id="1_kfa7i"]
 [ext_resource type="Script" uid="uid://dna1nk6ny4wky" path="res://world/test_level.gd" id="1_x27he"]
 [ext_resource type="Texture2D" uid="uid://cwv7ycfqp00l0" path="res://world/prototype_textures/Green/texture_01.png" id="2_x27he"]
-[ext_resource type="Script" uid="uid://djmpclamgnbh1" path="res://networking/multiplayer_spawner.gd" id="3_mmx4b"]
-[ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="4_yi58r"]
 [ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="6_mmx4b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
@@ -40,12 +38,6 @@ material = SubResource("StandardMaterial3D_ai45w")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1354992400]
 environment = SubResource("Environment_4717r")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=744651351]
-_spawnable_scenes = PackedStringArray("uid://7dujjowjcp6r")
-spawn_path = NodePath("../..")
-script = ExtResource("3_mmx4b")
-network_player = ExtResource("4_yi58r")
 
 [node name="EnemyTimer" type="Timer" parent="." unique_id=625124317]
 wait_time = 5.0

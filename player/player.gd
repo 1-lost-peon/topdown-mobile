@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var aim_rotator: Marker3D = $AimRotator
 @onready var aim_indicator: MeshInstance3D = $AimRotator/AimIndicator
 
+const BULLET = preload("uid://bdfadus56fvw8")
 
 
 signal player_died
@@ -174,6 +175,24 @@ func apply_input(new_movement_direction, new_movement_strength, new_attack_direc
 	input_movement_strength = new_movement_strength
 	input_attack_direction = new_attack_direction
 	input_attack_strength = new_attack_strength
+
+
+func shoot() -> void:
+	var world: Node = get_tree().current_scene.world
+		
+	var new_bullet = BULLET.instantiate()
+	new_bullet.name = str(multiplayer.get_unique_id()) + "_bullet_" + str(Time.get_ticks_msec())
+	world.add_child(new_bullet, true)
+	new_bullet.global_position = global_position
+
+	var bullet_direction := Vector3(
+		input_attack_direction.x,
+		0.0,
+		input_attack_direction.y
+	).normalized()
+
+	new_bullet.direction = bullet_direction
+
 
 var is_despawning := false
 
