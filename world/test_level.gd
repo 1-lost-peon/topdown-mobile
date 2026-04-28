@@ -17,7 +17,7 @@ func spawn_player_in_world(player: Node3D) -> void:
 	print("after:", player.global_position)
 
 func get_spawn_location() -> Vector3:
-	if spawn_index > spawn_locations.size() - 1:
+	if spawn_index >= spawn_locations.size() - 1:
 		spawn_index = 0
 	else:
 		spawn_index += 1

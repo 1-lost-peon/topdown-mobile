@@ -8,12 +8,18 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ppra6"]
 albedo_color = Color(0, 0.98039216, 0, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ofsxj"]
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_ofsxj"]
-radius = 2.0
+radius = 0.9552159
 
-[node name="Enemy" type="Node3D" unique_id=1600896374]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ofsxj"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Enemy" type="Node3D" unique_id=1600896374 groups=["enemies"]]
 script = ExtResource("1_ofsxj")
 
 [node name="Mannequin_Medium" parent="." unique_id=274731486 instance=ExtResource("1_2mvqj")]
@@ -23,16 +29,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ofsxj")
 surface_material_override/0 = SubResource("StandardMaterial3D_ppra6")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1558477626]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=466680448]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_ofsxj")
-
-[node name="Area3D" type="Area3D" parent="." unique_id=1418906879]
+[node name="AttackArea3D" type="Area3D" parent="." unique_id=1418906879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9074302, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1339788403]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea3D" unique_id=1339788403]
 shape = SubResource("SphereShape3D_ofsxj")
 
-[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]
+[node name="HitArea3D" type="Area3D" parent="." unique_id=614560419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9074302, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea3D" unique_id=109707169]
+shape = SubResource("SphereShape3D_ofsxj")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=93615751]
+replication_config = SubResource("SceneReplicationConfig_ofsxj")
+
+[connection signal="body_shape_entered" from="HitArea3D" to="." method="_on_area_3d_body_shape_entered"]

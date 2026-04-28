@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://4c0hvgrj5jmg"]
+
+[ext_resource type="Script" uid="uid://dna1nk6ny4wky" path="res://world/test_level.gd" id="1_45fod"]
+[ext_resource type="Texture2D" uid="uid://1thwsvf57h4y" path="res://world/prototype_textures/Dark/texture_01.png" id="2_tk3j8"]
+[ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="4_f5flg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
+albedo_texture = ExtResource("2_tk3j8")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6xmxd"]
+sky_top_color = Color(0.99333334, 1, 0.9, 1)
+
+[sub_resource type="Sky" id="Sky_tcf2h"]
+sky_material = SubResource("ProceduralSkyMaterial_6xmxd")
+
+[sub_resource type="Environment" id="Environment_4717r"]
+background_mode = 2
+sky = SubResource("Sky_tcf2h")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x27he"]
+
+[node name="TestEnemyLevel" type="Node3D" unique_id=1427648148]
+script = ExtResource("1_45fod")
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=704543413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_ai45w")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1354992400]
+environment = SubResource("Environment_4717r")
+
+[node name="EnemyTimer" type="Timer" parent="." unique_id=625124317]
+wait_time = 5.0
+autostart = true
+
+[node name="SpawnLocations" type="Node" parent="." unique_id=1565292278]
+
+[node name="SpawnLocation1" type="Node3D" parent="SpawnLocations" unique_id=82789354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation1" unique_id=1083271675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
+
+[node name="SpawnLocation2" type="Node3D" parent="SpawnLocations" unique_id=1830846225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation2" unique_id=1535402769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
+
+[node name="SpawnLocation3" type="Node3D" parent="SpawnLocations" unique_id=785664803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation3" unique_id=1883586459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
+
+[node name="SpawnLocation4" type="Node3D" parent="SpawnLocations" unique_id=764191792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 45)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnLocations/SpawnLocation4" unique_id=1678590078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_x27he")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189167663]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 5, 0)
+shadow_enabled = true
+
+[node name="Enemies" type="Node3D" parent="." unique_id=400374355]
+
+[node name="Enemy1" parent="Enemies" unique_id=1600896374 instance=ExtResource("4_f5flg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 40)

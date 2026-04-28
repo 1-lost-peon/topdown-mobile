@@ -38,11 +38,11 @@ var movement_drag_vector: Vector2
 var attack_drag_vector: Vector2
 @onready var v_box_container: VBoxContainer = $Main/ColorRect/VBoxContainer
 var player_count: int = 0
-@onready var label: Label = $Main/Label
+@onready var respawn_label: Label = $Main/RespawnLabel
 
 func _ready() -> void:
+	respawn_label.visible = false
 	Network.player_connected.connect(_on_player_connected)
-	label.text = str(multiplayer.get_unique_id())
 	joystick_data[JoystickType.MOVEMENT]["pad"] = movement_joy_stick_pad
 	joystick_data[JoystickType.MOVEMENT]["nub"] = movement_joy_stick_nub
 	joystick_data[JoystickType.MOVEMENT]["default_position"] = movement_joy_stick_nub.position
@@ -50,6 +50,7 @@ func _ready() -> void:
 	joystick_data[JoystickType.ATTACK]["pad"] = attack_joy_stick_pad
 	joystick_data[JoystickType.ATTACK]["nub"] = attack_joy_stick_nub
 	joystick_data[JoystickType.ATTACK]["default_position"] = attack_joy_stick_nub.position
+
 
 func _on_player_connected(peer_id, player_info) -> void:
 	var rows = v_box_container.get_children()

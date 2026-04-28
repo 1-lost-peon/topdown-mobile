@@ -12,6 +12,16 @@ func spawn_level() -> void:
 	add_child(level, true)
 	#NetworkHandling.log_message("World spawned in")
 
+@rpc("authority", "call_local", "reliable")
+func spawn_player(player_name) -> void:
+	Network.log_message("is respawning player")
+	var player := get_node_or_null(NodePath(player_name))
+	
+	if player == null:
+		return
+		
+	player.global_position = level.get_spawn_location()
+
 #func _ready() -> void:
 	#spawn_level()
 	#for location in $SpawnLocations.get_children():

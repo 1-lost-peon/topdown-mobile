@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 @onready var mannequin_medium: Node3D = $Mannequin_Medium
 @onready var camera = $Camera3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
@@ -11,14 +12,17 @@ extends CharacterBody3D
 @onready var aim_rotator: Marker3D = $AimRotator
 @onready var aim_indicator: MeshInstance3D = $AimRotator/AimIndicator
 
+
 const BULLET = preload("uid://bdfadus56fvw8")
 
 
 signal player_died
 
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const MOVEMENT_INDICATOR_MAX = 1.025
+
 
 var spawn_locations: Array[Vector3]
 var movement_direction: Vector3
@@ -37,6 +41,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	nameplate.text = name
+	is_dead = false
 	
 	if multiplayer.get_unique_id() != int(name):
 		nameplate.modulate = Color(0x00a0ffff)
@@ -49,6 +54,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		# Turn on the players respwn label here, an RPC
+		show_player_respawn.rpc_id(int(name), str(int(respawn_timer.time_left)))
+		return
+	
 	if is_multiplayer_authority():
 		#Network.log_message("Process player as authority") # just server
 		process_as_server(delta)
@@ -89,6 +99,7 @@ func process_as_local_player(delta):
 			0.0,
 			0.1
 		)
+
 
 func setup_as_other_player():
 	var mat := player_circle.get_active_material(0)
@@ -161,9 +172,6 @@ func process_as_server(delta):
 	#
 	#if multiplayer.get_unique_id() == int(name):
 
-		
-
-
 
 func update_movement_indicator() -> void:
 	var distance: float = input_movement_strength * MOVEMENT_INDICATOR_MAX
@@ -193,14 +201,27 @@ func shoot() -> void:
 
 	new_bullet.direction = bullet_direction
 
+@rpc("authority")
+func show_player_respawn(time: String) -> void:
+	hud.respawn_label.visible = true
+	hud.respawn_label.text = "Respawning in " + time + "..."
 
-var is_despawning := false
+@rpc("authority")
+func hide_player_respawn() -> void:
+	hud.respawn_label.visible = false
+
 
 func died() -> void:
-	is_dead = true
-	respawn_timer.start()
-	player_died.emit()
+	if is_multiplayer_authority():
+		is_dead = true
+		visible = false
+		respawn_timer.start()
+		player_died.emit()
+	
 
 
 func _on_respawn_timer_timeout() -> void:
-	is_dead = false
+	if is_multiplayer_authority():
+		visible = true
+		is_dead = false
+		hide_player_respawn.rpc_id(int(name))

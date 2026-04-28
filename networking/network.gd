@@ -108,6 +108,11 @@ func _spawn_player(new_player_info):
 	new_player.name = str(peer_id)
 	world.add_child(new_player, true)
 	new_player.global_position = world.level.get_spawn_location()
+	new_player.respawn_timer.timeout.connect(
+		func():
+			world.spawn_player(new_player.name)
+			#world.spawn_player.rpc(new_player.name)
+	)
 
 
 func log_message(...args) -> void:

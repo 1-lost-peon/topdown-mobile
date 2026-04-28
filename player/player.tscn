@@ -20,6 +20,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("PlayerCircle/MovementIndicator:position")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qjkh3"]
 
@@ -139,7 +142,7 @@ replication_config = SubResource("SceneReplicationConfig_rkbax")
 [node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]
 
 [node name="RespawnTimer" type="Timer" parent="." unique_id=2113646791]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [node name="Nameplate" type="Label3D" parent="." unique_id=1193414149]

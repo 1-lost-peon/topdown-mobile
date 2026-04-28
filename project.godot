@@ -37,6 +37,7 @@ enabled=PackedStringArray("res://addons/tile-run-instances/plugin.cfg")
 [global_group]
 
 players=""
+enemies=""
 
 [input_devices]
 
