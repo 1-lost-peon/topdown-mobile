@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://1thwsvf57h4y" path="res://world/prototype_textures/Dark/texture_01.png" id="1_kfa7i"]
 [ext_resource type="Script" uid="uid://dna1nk6ny4wky" path="res://world/test_level.gd" id="1_x27he"]
 [ext_resource type="Texture2D" uid="uid://cwv7ycfqp00l0" path="res://world/prototype_textures/Green/texture_01.png" id="2_x27he"]
+[ext_resource type="PackedScene" uid="uid://ghsc7s1t32p" path="res://world/extraction_spot.tscn" id="5_x27he"]
 [ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="6_mmx4b"]
+[ext_resource type="PackedScene" uid="uid://c8gg2cqeferoe" path="res://world/coins/Coin_A.gltf" id="6_yi58r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
 albedo_texture = ExtResource("1_kfa7i")
@@ -74,7 +76,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
 mesh = SubResource("CylinderMesh_x27he")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189167663]
-transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 5, 0)
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 5, 0)
 shadow_enabled = true
 
 [node name="Walls" type="Node3D" parent="." unique_id=1347534389]
@@ -203,3 +205,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 21)
 
 [node name="Enemy15" parent="Enemies" unique_id=364555899 instance=ExtResource("6_mmx4b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, -2)
+
+[node name="ExtractionSpot" parent="." unique_id=1950728413 instance=ExtResource("5_x27he")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 33.255, 0.555, -26.265999)
+
+[node name="Coin_A2" parent="." unique_id=1818751463 instance=ExtResource("6_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 3, -4)

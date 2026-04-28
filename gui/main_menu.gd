@@ -2,19 +2,23 @@ extends Control
 
 signal game_joined
 signal server_started
+signal scene_changed
 
 @onready var line_edit: LineEdit = $LineEdit
 
 
 func _on_start_server_pressed() -> void:
-	NetworkHandling.start_server()
+	Network.create_game()
 	server_started.emit()
-	queue_free()
+	end_scene()
 
 
 func _on_join_game_pressed() -> void:
-	#NetworkHandling.start_client()
-		#NetworkHandling.join_server(line_edit.text)
 	Network.join_game(line_edit.text)
 	game_joined.emit()
+	end_scene()
+
+
+func end_scene() -> void:
+	scene_changed.emit()
 	queue_free()

@@ -4,3 +4,21 @@
 
 [node name="GUI" type="CanvasLayer" unique_id=285665816]
 script = ExtResource("1_q8o8l")
+
+[node name="BlackScene" type="Control" parent="." unique_id=935850699]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="BlackScene" unique_id=2001148873]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://ghsc7s1t32p"]
+
+[ext_resource type="Shader" uid="uid://cb5bsoduh4utj" path="res://player/player_circle.gdshader" id="1_l1j4e"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4y0u5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_disrx"]
+render_priority = 0
+shader = ExtResource("1_l1j4e")
+shader_parameter/outline_color = Color(1, 0.07058824, 0.14901961, 1)
+shader_parameter/center_color = Color(1, 1, 1, 0.2)
+shader_parameter/radius = 0.42
+shader_parameter/outline_width = 0.06
+shader_parameter/glow_width = 0.08
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l1j4e"]
+radius = 0.839
+
+[node name="ExtractionSpot" type="Node3D" unique_id=1950728413]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1699764128]
+mesh = SubResource("PlaneMesh_4y0u5")
+surface_material_override/0 = SubResource("ShaderMaterial_disrx")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=776427970]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=266804129]
+shape = SubResource("SphereShape3D_l1j4e")

@@ -32,7 +32,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/tile-run-instances/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdscript-linter/plugin.cfg", "res://addons/tile-run-instances/plugin.cfg")
 
 [global_group]
 
