@@ -42,7 +42,7 @@ var player_count: int = 0
 
 func _ready() -> void:
 	respawn_label.visible = false
-	Network.player_connected.connect(_on_player_connected)
+	#Network.player_connected.connect(_on_player_connected)
 	joystick_data[JoystickType.MOVEMENT]["pad"] = movement_joy_stick_pad
 	joystick_data[JoystickType.MOVEMENT]["nub"] = movement_joy_stick_nub
 	joystick_data[JoystickType.MOVEMENT]["default_position"] = movement_joy_stick_nub.position
@@ -52,17 +52,17 @@ func _ready() -> void:
 	joystick_data[JoystickType.ATTACK]["default_position"] = attack_joy_stick_nub.position
 
 
-func _on_player_connected(peer_id, player_info) -> void:
-	var rows = v_box_container.get_children()
-	
-	if player_count >= rows.size():
-		return
-	
-	var row = rows[player_count]
-	var player_label = row.get_node("Player1") as Label
-	player_label.text = str(peer_id)
-	
-	player_count += 1
+#func _on_player_connected(peer_id, player_info) -> void:
+	#var rows = v_box_container.get_children()
+	#
+	#if player_count >= rows.size():
+		#return
+	#
+	#var row = rows[player_count]
+	#var player_label = row.get_node("Player1") as Label
+	#player_label.text = str(peer_id)
+	#
+	#player_count += 1
 
 
 func _input(event: InputEvent) -> void:
