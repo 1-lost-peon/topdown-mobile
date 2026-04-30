@@ -11,7 +11,13 @@ var main_menu: Node
 func _ready() -> void:
 	main_menu = main_menu_scene.instantiate()
 	add_child(main_menu)
+	
+	if OS.has_feature("server"):
+		return
+	
 	main_menu.scene_changed.connect(_on_scene_changed)
+	# world.scene_changed.connect(_on_scene_changed)
+	
 
 
 func _on_scene_changed() -> void:
@@ -21,4 +27,4 @@ func _on_scene_changed() -> void:
 
 func _on_scene_loaded() -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 0), 3.0)
+	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 0), 1.0)

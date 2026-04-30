@@ -5,6 +5,7 @@ extends Node
 
 
 func _ready() -> void:
+	world.scene_loaded.connect(gui._on_scene_loaded)
 	if OS.has_feature("server"):
 		Network.player_connected.connect(_on_player_connected.rpc_id)
 		gui.main_menu._on_start_server_pressed()

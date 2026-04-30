@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+signal player_loaded(name: String)
 
 @onready var mannequin_medium: Node3D = $Mannequin_Medium
 @onready var camera = $Camera3D
@@ -50,7 +51,7 @@ func _ready() -> void:
 	
 	camera.current = true
 	nameplate.modulate = Color(0x8aff00ff)
-	respawn_timer.timeout.emit()
+	player_loaded.emit(name)
 
 
 func _physics_process(delta: float) -> void:
