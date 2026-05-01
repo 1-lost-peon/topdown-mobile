@@ -14,8 +14,6 @@ enum State {
 @export var level_scene: PackedScene
 @export var player_scene: PackedScene
 
-var is_level_loaded: bool
-var is_player_loaded: bool
 var is_client_loaded: bool
 var level: Node
 var players: Node
@@ -41,6 +39,16 @@ func _process(_delta: float) -> void:
 			scene_loaded.emit()
 			state = State.PLAYING
 	if state == State.PLAYING:
+		var players = get_tree().get_nodes_in_group("players")
+		players = players.filter(func(p): return is_instance_valid(p))
+		
+		if players.is_empty():
+			return
+		
+		if players[0].coins == 1:
+			level.extraction_spot.can_extract = true
+
+	if state == State.PAUSING:
 		pass
 	# IF STATE == PAUSED
 
@@ -49,6 +57,7 @@ func _process(_delta: float) -> void:
 func spawn_level() -> void:
 	level = level_scene.instantiate()	
 	add_child(level, true)
+	level.extraction_spot.player_extracted.connect(end_game)
 
 
 # This only runs on the server. It is replicated to clients.
@@ -75,8 +84,14 @@ func check_if_scene_loaded() -> void:
 			return
 	
 	# Gives the network a chance to fully load
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	
 	is_client_loaded = true
 	if multiplayer.is_server():
 		set_is_client_loaded.rpc_id(1, is_client_loaded)
+
+
+func end_game() -> void:
+	Network.log_message("Wins game")
+	scene_changed.emit(GUI.Scene.MAIN_MENU)
+	get_tree().paused = true

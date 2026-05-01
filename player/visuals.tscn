@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://b8s2pyhogxd1i"]
+
+[ext_resource type="Shader" uid="uid://hqg0wjbda6ft" path="res://player/movement_indicator.gdshader" id="1_7kdvf"]
+[ext_resource type="Script" uid="uid://c5ovv1nqifftx" path="res://player/visuals.gd" id="1_8dcto"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qjkh3"]
+
+[sub_resource type="Shader" id="Shader_yw30f"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
+
+uniform vec4 outline_color : source_color = vec4(0.1, 1.0, 0.15, 1.0);
+uniform vec4 center_color : source_color = vec4(1.0, 1.0, 1.0, 0.2);
+uniform float radius = 0.42;
+uniform float outline_width = 0.06;
+uniform float glow_width = 0.08;
+
+void fragment() {
+	vec2 uv = UV - vec2(0.5);
+	float dist = length(uv);
+
+	float circle = smoothstep(radius, radius - 0.01, dist);
+	float outline = smoothstep(radius, radius - 0.01, dist)
+		- smoothstep(radius - outline_width, radius - outline_width - 0.01, dist);
+
+	float glow = smoothstep(radius + glow_width, radius, dist) * 0.35;
+
+	vec4 col = center_color;
+	col = mix(col, outline_color, outline);
+	col.rgb += outline_color.rgb * glow;
+
+	col.a *= circle;
+	col.a = max(col.a, outline * outline_color.a);
+	col.a += glow * outline_color.a * outline;
+
+	ALBEDO = col.rgb;
+	ALPHA = col.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjkh3"]
+render_priority = 0
+shader = SubResource("Shader_yw30f")
+shader_parameter/outline_color = Color(0.45, 1, 0.65, 0.7)
+shader_parameter/center_color = Color(1, 1, 1, 0.28)
+shader_parameter/radius = 0.42
+shader_parameter/outline_width = 0.06
+shader_parameter/glow_width = 0.08
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_boad6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgyib"]
+render_priority = 0
+shader = ExtResource("1_7kdvf")
+shader_parameter/circle_color = Color(0.35, 0.95, 0.55, 0.85)
+shader_parameter/radius = 0.32
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8dcto"]
+properties/0/path = NodePath("PlayerCircle:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("PlayerCircle/MovementIndicator:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Visuals" type="Node3D" unique_id=846302141]
+script = ExtResource("1_8dcto")
+
+[node name="Nameplate" type="Label3D" parent="." unique_id=333373989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+billboard = 2
+fixed_size = true
+text = "PEER ID"
+font_size = 24
+outline_size = 24
+
+[node name="PlayerCircle" type="MeshInstance3D" parent="." unique_id=920430199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("PlaneMesh_qjkh3")
+surface_material_override/0 = SubResource("ShaderMaterial_qjkh3")
+
+[node name="MovementIndicator" type="MeshInstance3D" parent="PlayerCircle" unique_id=639830015]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 1.0254577)
+mesh = SubResource("PlaneMesh_boad6")
+surface_material_override/0 = SubResource("ShaderMaterial_rgyib")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=994094226]
+replication_config = SubResource("SceneReplicationConfig_8dcto")

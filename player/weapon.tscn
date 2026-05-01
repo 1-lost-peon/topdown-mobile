@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://c283csdqwfyfx"]
+
+[ext_resource type="Script" uid="uid://howwbm4pxcfp" path="res://player/weapon.gd" id="1_mnyy7"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5iljw"]
+
+[sub_resource type="Shader" id="Shader_g6k8r"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
+
+uniform vec4 rect_color : source_color = vec4(0.65, 0.68, 0.70, 0.35);
+
+uniform float max_width = 0.0;
+uniform float width = 0.5;
+uniform float height = 0.04;
+uniform float radius = 0.02;
+uniform float edge_softness = 0.01;
+
+float rounded_box(vec2 p, vec2 half_size, float r) {
+	vec2 q = abs(p) - half_size + vec2(r);
+	return length(max(q, 0.0)) - r;
+}
+
+void fragment() {
+	vec2 p = UV - vec2(0.5);
+
+	// Right side anchored, shrinks inward toward center/left
+	p.x -= (max_width - width) * 0.5;
+
+	float d = rounded_box(
+		p,
+		vec2(width * 0.5, height * 0.5),
+		radius
+	);
+
+	float alpha = smoothstep(edge_softness, -edge_softness, d);
+
+	ALBEDO = rect_color.rgb;
+	ALPHA = rect_color.a * alpha;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mnyy7"]
+render_priority = 0
+shader = SubResource("Shader_g6k8r")
+shader_parameter/rect_color = Color(0.65, 0.68, 0.7, 0.35)
+shader_parameter/max_width = 0.0
+shader_parameter/width = 0.5
+shader_parameter/height = 0.04
+shader_parameter/radius = 0.02
+shader_parameter/edge_softness = 0.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mnyy7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnyy7"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mnyy7"]
+material = SubResource("StandardMaterial3D_mnyy7")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kyb8j"]
+properties/0/path = NodePath("AimRotator/MaxAttackDistance:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("AimRotator/MaxAttackDistance:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AimRotator/Area3D:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AimRotator:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AimRotator/CPUParticles3D:emitting")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[node name="Weapon" type="Node3D" unique_id=1972223267]
+script = ExtResource("1_mnyy7")
+
+[node name="AimRotator" type="Marker3D" parent="." unique_id=2009980146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+
+[node name="AimIndicator" type="MeshInstance3D" parent="AimRotator" unique_id=2102635299]
+transform = Transform3D(-4.371139e-07, 0, 10, 0, 10, 0, -10, 0, -4.371139e-07, 0, 0, 0)
+mesh = SubResource("PlaneMesh_5iljw")
+surface_material_override/0 = SubResource("ShaderMaterial_mnyy7")
+
+[node name="MaxAttackDistance" type="Marker3D" parent="AimRotator" unique_id=291704650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 9.523052)
+
+[node name="Area3D" type="Area3D" parent="AimRotator" unique_id=710586808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AimRotator/Area3D" unique_id=437014940]
+shape = SubResource("SphereShape3D_mnyy7")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="AimRotator" unique_id=903309896]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.03, 0)
+emitting = false
+amount = 3
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
+mesh = SubResource("CapsuleMesh_mnyy7")
+particle_flag_align_y = true
+spread = 2.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_amount_min = 0.19999999
+scale_amount_max = 0.19999999
+color = Color(1, 0.3647059, 0, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=522158745]
+replication_config = SubResource("SceneReplicationConfig_kyb8j")
+
+[connection signal="area_entered" from="AimRotator/Area3D" to="." method="_on_area_3d_area_entered"]

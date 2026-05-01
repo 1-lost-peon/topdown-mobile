@@ -91,7 +91,7 @@ func check_joy_stick_active(type: JoystickType, event: InputEventScreenTouch) ->
 	var nub: Control = joystick["nub"]
 
 	var center = nub.global_position + nub.size / 2.0
-	var radius = nub.size.x / 2.0
+	var radius = nub.size.x * 2.0
 
 	if event.position.distance_to(center) <= radius:
 		joystick["active"] = event.index
@@ -155,7 +155,7 @@ func shoot_request() -> void:
 		if p.name == str(sender_id):
 			player = p
 	if player:
-		player.shoot()
+		player.weapon.attack()
 
 
 @rpc("any_peer", "call_local", "reliable")

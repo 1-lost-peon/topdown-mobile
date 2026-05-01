@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var speed: float = 3.0
+
 var players: Array[Node]
 
 func _ready() -> void:
@@ -17,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if not players[0].is_dead:
-		global_position = global_position.move_toward(players[0].global_position, 3.0 * delta)
+		global_position = global_position.move_toward(players[0].global_position, speed * delta)
 
 func _on_area_3d_body_shape_entered(_body_rid: RID, body: Node3D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if !is_multiplayer_authority():

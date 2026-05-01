@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://ghsc7s1t32p"]
 
+[ext_resource type="Script" uid="uid://cf2t8s22p3mtl" path="res://world/extraction_spot.gd" id="1_4y0u5"]
 [ext_resource type="Shader" uid="uid://cb5bsoduh4utj" path="res://player/player_circle.gdshader" id="1_l1j4e"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4y0u5"]
@@ -17,6 +18,7 @@ shader_parameter/glow_width = 0.08
 radius = 0.839
 
 [node name="ExtractionSpot" type="Node3D" unique_id=1950728413]
+script = ExtResource("1_4y0u5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1699764128]
 mesh = SubResource("PlaneMesh_4y0u5")
@@ -26,3 +28,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_disrx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=266804129]
 shape = SubResource("SphereShape3D_l1j4e")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

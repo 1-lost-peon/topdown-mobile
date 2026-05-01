@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
 [ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://player/hud.tscn" id="3_g1dw6"]
-[ext_resource type="Shader" uid="uid://hqg0wjbda6ft" path="res://player/movement_indicator.gdshader" id="6_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://c283csdqwfyfx" path="res://player/weapon.tscn" id="4_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://b8s2pyhogxd1i" path="res://player/visuals.tscn" id="4_yw30f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oul6g"]
 
@@ -11,164 +12,38 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Mannequin_Medium:rotation")
+properties/1/path = NodePath("Mesh3D:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("PlayerCircle:rotation")
+properties/2/path = NodePath(".:visible")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("PlayerCircle/MovementIndicator:position")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath(".:visible")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_qjkh3"]
-
-[sub_resource type="Shader" id="Shader_yw30f"]
-code = "shader_type spatial;
-render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
-
-uniform vec4 outline_color : source_color = vec4(0.1, 1.0, 0.15, 1.0);
-uniform vec4 center_color : source_color = vec4(1.0, 1.0, 1.0, 0.2);
-uniform float radius = 0.42;
-uniform float outline_width = 0.06;
-uniform float glow_width = 0.08;
-
-void fragment() {
-	vec2 uv = UV - vec2(0.5);
-	float dist = length(uv);
-
-	float circle = smoothstep(radius, radius - 0.01, dist);
-	float outline = smoothstep(radius, radius - 0.01, dist)
-		- smoothstep(radius - outline_width, radius - outline_width - 0.01, dist);
-
-	float glow = smoothstep(radius + glow_width, radius, dist) * 0.35;
-
-	vec4 col = center_color;
-	col = mix(col, outline_color, outline);
-	col.rgb += outline_color.rgb * glow;
-
-	col.a *= circle;
-	col.a = max(col.a, outline * outline_color.a);
-	col.a += glow * outline_color.a * outline;
-
-	ALBEDO = col.rgb;
-	ALPHA = col.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjkh3"]
-render_priority = 0
-shader = SubResource("Shader_yw30f")
-shader_parameter/outline_color = Color(0.45, 1, 0.65, 0.7)
-shader_parameter/center_color = Color(1, 1, 1, 0.28)
-shader_parameter/radius = 0.42
-shader_parameter/outline_width = 0.06
-shader_parameter/glow_width = 0.08
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_boad6"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgyib"]
-render_priority = 0
-shader = ExtResource("6_g6k8r")
-shader_parameter/circle_color = Color(0.35, 0.95, 0.55, 0.85)
-shader_parameter/radius = 0.32
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_g6k8r"]
-
-[sub_resource type="Shader" id="Shader_g6k8r"]
-code = "shader_type spatial;
-render_mode unshaded, blend_mix, depth_prepass_alpha, cull_disabled;
-
-uniform vec4 rect_color : source_color = vec4(0.65, 0.68, 0.70, 0.35);
-
-uniform float max_width = 0.0;
-uniform float width = 0.5;
-uniform float height = 0.04;
-uniform float radius = 0.02;
-uniform float edge_softness = 0.01;
-
-float rounded_box(vec2 p, vec2 half_size, float r) {
-	vec2 q = abs(p) - half_size + vec2(r);
-	return length(max(q, 0.0)) - r;
-}
-
-void fragment() {
-	vec2 p = UV - vec2(0.5);
-
-	// Right side anchored, shrinks inward toward center/left
-	p.x -= (max_width - width) * 0.5;
-
-	float d = rounded_box(
-		p,
-		vec2(width * 0.5, height * 0.5),
-		radius
-	);
-
-	float alpha = smoothstep(edge_softness, -edge_softness, d);
-
-	ALBEDO = rect_color.rgb;
-	ALPHA = rect_color.a * alpha;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_boad6"]
-render_priority = 0
-shader = SubResource("Shader_g6k8r")
-shader_parameter/rect_color = Color(0.65, 0.68, 0.7, 0.35)
-shader_parameter/max_width = 0.0
-shader_parameter/width = 0.5
-shader_parameter/height = 0.04
-shader_parameter/radius = 0.02
-shader_parameter/edge_softness = 0.0
 
 [node name="Player" type="CharacterBody3D" unique_id=548357737 groups=["players"]]
 script = ExtResource("1_rkbax")
 
-[node name="Mannequin_Medium" parent="." unique_id=623490887 instance=ExtResource("1_oul6g")]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1345496390]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 10, 5)
+projection = 1
+size = 15.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=352145330]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_oul6g")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1345496390]
-transform = Transform3D(1, 0, 0, 0, 0.49999994, 0.8660254, 0, -0.8660254, 0.49999994, 0, 10, 5)
-projection = 1
-size = 15.0
+[node name="Mesh3D" parent="." unique_id=623490887 instance=ExtResource("1_oul6g")]
+
+[node name="Visuals" parent="." unique_id=846302141 instance=ExtResource("4_yw30f")]
+
+[node name="Weapon" parent="." unique_id=1972223267 instance=ExtResource("4_qjkh3")]
+
+[node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1993697615]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
 
-[node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]
-
 [node name="RespawnTimer" type="Timer" parent="." unique_id=2113646791]
 wait_time = 5.0
 one_shot = true
-
-[node name="Nameplate" type="Label3D" parent="." unique_id=1193414149]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
-billboard = 2
-fixed_size = true
-text = "PEER ID"
-font_size = 24
-outline_size = 24
-
-[node name="PlayerCircle" type="MeshInstance3D" parent="." unique_id=1522762037]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
-mesh = SubResource("PlaneMesh_qjkh3")
-surface_material_override/0 = SubResource("ShaderMaterial_qjkh3")
-
-[node name="MovementIndicator" type="MeshInstance3D" parent="PlayerCircle" unique_id=1575729262]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 1.0254577)
-mesh = SubResource("PlaneMesh_boad6")
-surface_material_override/0 = SubResource("ShaderMaterial_rgyib")
-
-[node name="AimRotator" type="Marker3D" parent="." unique_id=862719149]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
-
-[node name="AimIndicator" type="MeshInstance3D" parent="AimRotator" unique_id=1176426827]
-transform = Transform3D(-4.371139e-07, 0, 10, 0, 10, 0, -10, 0, -4.371139e-07, 0, 0, 0)
-mesh = SubResource("PlaneMesh_g6k8r")
-surface_material_override/0 = SubResource("ShaderMaterial_boad6")
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]

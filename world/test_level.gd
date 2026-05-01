@@ -1,12 +1,16 @@
 extends Node3D
 
-@onready var spawn_locations: Array[Vector3]
 var spawn_index: int = spawn_locations.size() + 1
+
+@onready var extraction_spot: Node3D = $ExtractionSpot
+@onready var spawn_locations: Array[Vector3]
+
 
 func _ready() -> void:
 	for location in $SpawnLocations.get_children():
 		spawn_locations.append(location.global_position)
-		
+
+
 func spawn_player_in_world(player: Node3D) -> void:
 	var pos := new_spawn_location()
 	print("chosen spawn:", pos)
