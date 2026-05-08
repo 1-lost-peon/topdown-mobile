@@ -21,18 +21,27 @@ func _ready():
 
 func get_local_lan_ip() -> String:
 	var interfaces = IP.get_local_interfaces()
+
 	for iface in interfaces:
 		var friendly := str(iface.get("friendly", "")).to_lower()
-		var addresses = iface.get("addresses", [])
+		var addresses: Array = iface.get("addresses", [])
+
 		if "wi-fi" in friendly or "wifi" in friendly or "wlan" in friendly or "wireless" in friendly:
-			return addresses[1]
-		
+			for address in addresses:
+				var ip := str(address)
+
+				# IPv4 only
+				if "." in ip and ":" not in ip:
+					# Avoid link-local fallback addresses like 169.254.x.x
+					if not ip.begins_with("169.254."):
+						return ip
+
 	return "127.0.0.1"
 
 
 func join_game(address = ""):
 	if address.is_empty():
-		address = DEFAULT_SERVER_IP
+		address = ip_address
 	
 	var peer = ENetMultiplayerPeer.new()
 	

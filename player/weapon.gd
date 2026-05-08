@@ -12,6 +12,10 @@ var is_despawning := false
 var is_attacking: bool = false
 
 
+func _ready():
+	cpu_particles_3d.emitting = true
+
+
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		if is_attacking:
