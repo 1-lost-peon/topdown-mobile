@@ -4,6 +4,8 @@ var spawn_index: int = spawn_locations.size() + 1
 
 @onready var extraction_spot: Node3D = $ExtractionSpot
 @onready var spawn_locations: Array[Vector3]
+@onready var enemy_timer: Timer = $EnemyTimer
+@onready var enemy_spawn_locations: Node3D = $EnemySpawnLocations
 
 
 func _ready() -> void:
@@ -27,7 +29,14 @@ func get_spawn_location() -> Vector3:
 		spawn_index += 1
 	
 	return spawn_locations[spawn_index]
-#
+
+
+func get_enemy_spawn_location() -> Vector3:
+	var locations: Array = enemy_spawn_locations.get_children()
+	var rng = RandomNumberGenerator.new()
+	var random_index = rng.randi_range(0, locations.size() - 1)
+	return locations[random_index].global_position
+
 #func _on_enemy_timer_timeout():
 	#var players = get_tree().get_nodes_in_group("players")
 	#if players:

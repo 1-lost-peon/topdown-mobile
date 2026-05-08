@@ -16,37 +16,27 @@ enum State {
 
 var is_client_loaded: bool
 var level: Node
-var players: Node
 var state: State
 
-@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
-
-
-func _ready() -> void:
-	players = Node.new()
-	players.name = "Players"
-	add_child(players)
-	multiplayer_spawner.spawn_path = players.get_path()
+@onready var enemies: Node3D = $Enemies
+@onready var players: Node3D = $Players
 
 
 func _process(_delta: float) -> void:
 	if state == State.MENU:
 		pass
+	
 	if state == State.LOADING: # I need a way to capture the client
 		if !is_multiplayer_authority():
 			check_if_scene_loaded()
 		if is_client_loaded:
 			scene_loaded.emit()
 			state = State.PLAYING
+	
 	if state == State.PLAYING:
-		var players = get_tree().get_nodes_in_group("players")
-		players = players.filter(func(p): return is_instance_valid(p))
-		
-		if players.is_empty():
-			return
-		
-		if players[0].coins == 1:
-			level.extraction_spot.can_extract = true
+		for player in players.get_children():
+			if player.coins == 1:
+				level.extraction_spot.can_extract = true
 
 	if state == State.PAUSING:
 		pass
@@ -58,6 +48,9 @@ func spawn_level() -> void:
 	level = level_scene.instantiate()	
 	add_child(level, true)
 	level.extraction_spot.player_extracted.connect(end_game)
+	
+	if multiplayer.get_unique_id() == 1:
+		level.enemy_timer.timeout.connect(on_enemy_spawn_timer_timeout)
 
 
 # This only runs on the server. It is replicated to clients.
@@ -68,6 +61,24 @@ func spawn_player(player_name) -> void:
 	player.name = str(player_name)
 	players.add_child(player, true)
 	player.global_position = level.get_spawn_location()
+	player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
+
+
+func on_player_respawn_timer_timeout(player: Node) -> void:
+	player.global_position = level.get_spawn_location()
+
+
+# This only runs on the server. It is replicated to clients.
+func on_enemy_spawn_timer_timeout() -> void:
+	Network.log_message("Spawning enemies into the world...")
+	
+	var enemy = enemy_scene.instantiate()
+	enemy.name = "Enemy"
+	enemies.add_child(enemy, true)
+	enemy.global_position = level.get_enemy_spawn_location()
+
+
+
 
 
 @rpc("any_peer")

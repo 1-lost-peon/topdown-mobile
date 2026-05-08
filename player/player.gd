@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		# Turn on the players respwn label here, an RPC
 		show_player_respawn.rpc_id(int(name), str(int(respawn_timer.time_left)))
-		return		
+		return
 	
 	if is_multiplayer_authority():
 		#Network.log_message("Process player as authority") # just server
