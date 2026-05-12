@@ -4,16 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="2_h5o24"]
 [ext_resource type="PackedScene" uid="uid://clfwfgklsq505" path="res://world/test_level.tscn" id="3_4717r"]
 [ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="5_fn3g3"]
+[ext_resource type="PackedScene" uid="uid://bf821lcuaeajj" path="res://world/pickup.tscn" id="5_mmdvd"]
 
 [node name="World" type="Node3D" unique_id=1944548304]
 script = ExtResource("1_4717r")
 enemy_scene = ExtResource("2_h5o24")
 level_scene = ExtResource("3_4717r")
 player_scene = ExtResource("5_fn3g3")
+pickup_scene = ExtResource("5_mmdvd")
 
 [node name="Players" type="Node3D" parent="." unique_id=837092731]
 
 [node name="Enemies" type="Node3D" parent="." unique_id=1065470357]
+
+[node name="Pickups" type="Node3D" parent="." unique_id=757360152]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1687428556]
 _spawnable_scenes = PackedStringArray("uid://7dujjowjcp6r")
@@ -22,3 +26,7 @@ spawn_path = NodePath("../Players")
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="." unique_id=613402048]
 _spawnable_scenes = PackedStringArray("uid://vgbpjo1344ae")
 spawn_path = NodePath("../Enemies")
+
+[node name="PickupSpawner" type="MultiplayerSpawner" parent="." unique_id=1321983651]
+_spawnable_scenes = PackedStringArray("uid://bf821lcuaeajj")
+spawn_path = NodePath("../Pickups")

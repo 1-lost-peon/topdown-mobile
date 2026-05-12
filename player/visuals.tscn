@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://hqg0wjbda6ft" path="res://player/movement_indicator.gdshader" id="1_7kdvf"]
 [ext_resource type="Script" uid="uid://c5ovv1nqifftx" path="res://player/visuals.gd" id="1_8dcto"]
+[ext_resource type="Texture2D" uid="uid://b64p1jp5gbs58" path="res://world/coins/faceon_gold_coin.png" id="2_23u1m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_qjkh3"]
 
@@ -64,6 +65,18 @@ properties/1/replication_mode = 1
 
 [node name="Visuals" type="Node3D" unique_id=846302141]
 script = ExtResource("1_8dcto")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1570377205]
+transform = Transform3D(0.15, 0, 0, 0, 0.074999996, 0.12990382, 0, -0.12990382, 0.074999996, -0.5105612, 5.5683126, 0)
+texture = ExtResource("2_23u1m")
+
+[node name="NumberPlate" type="Label3D" parent="." unique_id=1711762078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45258915, 5.5701904, 0)
+billboard = 2
+fixed_size = true
+text = "0"
+font_size = 20
+outline_size = 24
 
 [node name="Nameplate" type="Label3D" parent="." unique_id=333373989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)

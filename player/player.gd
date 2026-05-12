@@ -197,13 +197,25 @@ func hide_player_respawn() -> void:
 	hud.respawn_label.visible = false
 
 
+@rpc()
+func collected_pickup():
+	coins += 1
+	visuals.number_plate.text = str(coins)
+
+@rpc()
+func set_coins_amount(new_coins_amount):
+	coins = new_coins_amount
+	visuals.number_plate.text = str(coins)
+
 func died() -> void:
 	if is_multiplayer_authority():
 		is_dead = true
 		visible = false
 		respawn_timer.start()
 		player_died.emit()
-	
+		set_coins_amount.rpc_id(int(name), 0)
+		coins = 0
+		visuals.number_plate.text = str(coins)
 
 
 func _on_respawn_timer_timeout() -> void:

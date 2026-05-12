@@ -13,6 +13,7 @@ enum State {
 @export var enemy_scene: PackedScene
 @export var level_scene: PackedScene
 @export var player_scene: PackedScene
+@export var pickup_scene: PackedScene
 
 var is_client_loaded: bool
 var level: Node
@@ -20,6 +21,7 @@ var state: State
 
 @onready var enemies: Node3D = $Enemies
 @onready var players: Node3D = $Players
+@onready var pickups: Node3D = $Pickups
 
 
 func _process(_delta: float) -> void:
@@ -62,6 +64,7 @@ func spawn_player(player_name) -> void:
 	players.add_child(player, true)
 	player.global_position = level.get_spawn_location()
 	player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
+	player.player_died.connect(on_player_died.bind(player))
 
 
 func on_player_respawn_timer_timeout(player: Node) -> void:
@@ -76,6 +79,17 @@ func on_enemy_spawn_timer_timeout() -> void:
 	enemy.name = "Enemy"
 	enemies.add_child(enemy, true)
 	enemy.global_position = level.get_enemy_spawn_location()
+
+func on_player_died(player) -> void:
+	Network.log_message("Spawning", player.coins, "coin(s) into the world...")
+	
+	for x in player.coins:
+		var pickup = pickup_scene.instantiate()
+	#player.name = str(player_name)
+		pickups.add_child(pickup, true)
+		pickup.global_position = player.global_position
+	#player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
+	#player.player_died.connect(on_player_respawn_timer_timeout.bind(player))
 
 
 

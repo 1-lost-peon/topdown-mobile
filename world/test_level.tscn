@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ghsc7s1t32p" path="res://world/extraction_spot.tscn" id="5_x27he"]
 [ext_resource type="PackedScene" uid="uid://vgbpjo1344ae" path="res://enemy/enemy.tscn" id="6_mmx4b"]
 [ext_resource type="Texture2D" uid="uid://dbtymvtkbmhig" path="res://world/prototype_textures/Orange/texture_01.png" id="6_yi58r"]
+[ext_resource type="PackedScene" uid="uid://bf821lcuaeajj" path="res://world/pickup.tscn" id="7_yi58r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai45w"]
 albedo_texture = ExtResource("1_kfa7i")
@@ -42,18 +43,21 @@ script = ExtResource("1_x27he")
 [node name="Floor" type="CSGBox3D" parent="." unique_id=704543413]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0, 39.5)
 use_collision = true
+collision_layer = 9
 size = Vector3(178, 1, 21)
 material = SubResource("StandardMaterial3D_ai45w")
 
 [node name="Floor2" type="CSGBox3D" parent="." unique_id=2142019849]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0, -0.5)
 use_collision = true
+collision_layer = 9
 size = Vector3(178, 1, 59)
 material = SubResource("StandardMaterial3D_ai45w")
 
 [node name="Floor3" type="CSGBox3D" parent="." unique_id=2023955418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0, 79.5)
 use_collision = true
+collision_layer = 9
 size = Vector3(178, 1, 59)
 material = SubResource("StandardMaterial3D_ai45w")
 
@@ -176,7 +180,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 0, 36)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 45)
 
 [node name="ExtractionSpot" parent="." unique_id=1950728413 instance=ExtResource("5_x27he")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -36.745, 0.555, 37.734)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -36.745, 0.51, 37.734)
 
 [node name="EnemyEntrances" type="Node3D" parent="." unique_id=2003372009]
 
@@ -221,3 +225,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 0, 48.666046)
 [node name="EnemyTimer" type="Timer" parent="." unique_id=625124317]
 wait_time = 5.0
 autostart = true
+
+[node name="Pickup" parent="." unique_id=1019803501 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.49247, 1, 38.13583)
+
+[node name="Pickup2" parent="." unique_id=1553453760 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.49247, 1, 38.13583)
+
+[node name="Pickup3" parent="." unique_id=266127803 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.49247, 1, 40.13583)
+
+[node name="Pickup4" parent="." unique_id=1108748395 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.49247, 1, 40.13583)
+
+[node name="Pickup5" parent="." unique_id=227531294 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.49247, 1, 41.13583)
+
+[node name="Pickup6" parent="." unique_id=1424816491 instance=ExtResource("7_yi58r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.49247, 1, 41.13583)

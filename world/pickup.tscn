@@ -5,7 +5,16 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wq827"]
 
-[node name="Pickup" type="Node3D" unique_id=1019803501]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_w5plo"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Pickup" type="RigidBody3D" unique_id=266127803]
+collision_layer = 8
+collision_mask = 8
+axis_lock_linear_y = true
+axis_lock_angular_y = true
 script = ExtResource("1_w5plo")
 
 [node name="Coin_A2" parent="." unique_id=1818751463 instance=ExtResource("1_wq827")]
@@ -14,5 +23,11 @@ script = ExtResource("1_w5plo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1647059689]
 shape = SubResource("SphereShape3D_wq827")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1446812178]
+shape = SubResource("SphereShape3D_wq827")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=275486718]
+replication_config = SubResource("SceneReplicationConfig_w5plo")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
