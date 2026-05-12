@@ -19,6 +19,9 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ppra6"]
+radius = 11.910913
+
 [node name="Enemy" type="Node3D" unique_id=1600896374 groups=["enemies"]]
 script = ExtResource("1_ofsxj")
 
@@ -44,4 +47,11 @@ shape = SubResource("SphereShape3D_ofsxj")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=93615751]
 replication_config = SubResource("SceneReplicationConfig_ofsxj")
 
+[node name="SearchArea3D" type="Area3D" parent="." unique_id=130826576]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SearchArea3D" unique_id=2065553277]
+shape = SubResource("SphereShape3D_ppra6")
+
 [connection signal="body_shape_entered" from="HitArea3D" to="." method="_on_area_3d_body_shape_entered"]
+[connection signal="body_entered" from="SearchArea3D" to="." method="_on_search_area_3d_body_entered"]
+[connection signal="body_exited" from="SearchArea3D" to="." method="_on_search_area_3d_body_exited"]
