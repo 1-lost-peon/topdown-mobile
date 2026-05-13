@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://hiuauehffhc6"]
 
 [ext_resource type="Script" uid="uid://dvsun1wmifgn6" path="res://gui/gui.gd" id="1_q8o8l"]
+[ext_resource type="PackedScene" uid="uid://b1fku66aejinc" path="res://gui/main_menu.tscn" id="2_ioifv"]
+[ext_resource type="PackedScene" uid="uid://duiys1xjh0hbe" path="res://gui/tutorial.tscn" id="3_q46mf"]
 
 [node name="GUI" type="CanvasLayer" unique_id=285665816]
 process_mode = 3
 script = ExtResource("1_q8o8l")
+main_menu_scene = ExtResource("2_ioifv")
+tutorial_scene = ExtResource("3_q46mf")
 
 [node name="BlackScene" type="Control" parent="." unique_id=935850699]
 modulate = Color(1, 1, 1, 0)

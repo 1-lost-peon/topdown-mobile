@@ -20,5 +20,5 @@ func _on_join_game_pressed() -> void:
 
 
 func end_scene() -> void:
-	scene_changed.emit(GUI.Scene.EMPTY)
+	scene_changed.emit(GUI.Scene.TUTORIAL)
 	queue_free()

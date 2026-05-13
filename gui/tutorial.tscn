@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://duiys1xjh0hbe"]
+
+[ext_resource type="Texture2D" uid="uid://b64p1jp5gbs58" path="res://world/coins/faceon_gold_coin.png" id="1_5p4sk"]
+[ext_resource type="Script" uid="uid://dyhj7tia5pls2" path="res://gui/tutorial.gd" id="1_c425y"]
+
+[node name="Tutorial" type="Control" unique_id=232173554]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c425y")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1088087575]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="." unique_id=1928841736]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.5
+offset_top = -150.0
+offset_right = 296.5
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel" unique_id=1089795739]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -262.0
+offset_top = -76.5
+offset_right = 262.0
+offset_bottom = 76.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "You've been dropped off to search for resources.
+
+Search the area for as many coinss as you can find.
+
+Then return to the extraction point. If you die, you drop everything. 
+So be careful!"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Label" unique_id=413868375]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 41.5
+offset_right = 261.0
+offset_bottom = 81.5
+texture = ExtResource("1_5p4sk")
+expand_mode = 2
+
+[node name="Timer" type="Timer" parent="." unique_id=945638801]
+wait_time = 5.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
