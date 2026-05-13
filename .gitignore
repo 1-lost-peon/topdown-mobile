@@ -22,3 +22,5 @@ mono_crash.*.json
 *.apk
 *.aab
 debug_keystore_b64.txt
+*.exe
+*.pck
