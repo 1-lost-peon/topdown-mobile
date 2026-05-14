@@ -2,6 +2,7 @@ extends Node3D
 
 signal scene_loaded
 signal scene_changed
+signal game_ended
 
 enum State {
 	LOADING,
@@ -37,7 +38,7 @@ func _process(_delta: float) -> void:
 	
 	if state == State.PLAYING:
 		for player in players.get_children():
-			if player.coins == 1:
+			if player.coins != 0:
 				level.extraction_spot.can_extract = true
 
 	if state == State.PAUSING:
@@ -80,6 +81,7 @@ func on_enemy_spawn_timer_timeout() -> void:
 	enemies.add_child(enemy, true)
 	enemy.global_position = level.get_enemy_spawn_location()
 
+
 func on_player_died(player) -> void:
 	Network.log_message("Spawning", player.coins, "coin(s) into the world...")
 	
@@ -90,9 +92,6 @@ func on_player_died(player) -> void:
 		pickup.global_position = player.global_position
 	#player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
 	#player.player_died.connect(on_player_respawn_timer_timeout.bind(player))
-
-
-
 
 
 @rpc("any_peer")
@@ -117,6 +116,24 @@ func check_if_scene_loaded() -> void:
 
 
 func end_game() -> void:
-	Network.log_message("Wins game")
-	scene_changed.emit(GUI.Scene.MAIN_MENU)
-	get_tree().paused = true
+	# If players have more than 1 coin
+	# if all players are dead or leave with no coins
+	if players:
+		var survivors = players.get_children().count(func(p): return not p.is_dead)
+		var resources_collected = players.get_children().reduce(
+			func(total, p): return total + p.coins, 
+				0
+		)
+		
+		var status = "Failed" if (survivors == 0 or resources_collected == 0) else "Success"
+		
+		var results = {
+			"status": status,
+			"survivors": survivors,
+			"resources": resources_collected,
+		}
+		
+		Network.log_message("End game")
+		scene_changed.emit(GUI.Scene.RESULTS)
+		game_ended.emit(results)
+		get_tree().paused = true

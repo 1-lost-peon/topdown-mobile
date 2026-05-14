@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://ciwpcqtr08kb4"]
+
+[ext_resource type="Script" uid="uid://y1r1jsjug1nk" path="res://gui/results_scene.gd" id="1_2855q"]
+
+[node name="ResultsScene" type="Control" unique_id=1499290521]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2855q")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1157534157]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.4351923, 0.43519226, 0.43519226, 1)
+
+[node name="VSplitContainer" type="VSplitContainer" parent="." unique_id=1079580048]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.5
+offset_top = -33.5
+offset_right = 170.5
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VSplitContainer" unique_id=35087541]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer" unique_id=2114329117]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Mission:"
+
+[node name="StatusLabel" type="Label" parent="VSplitContainer/HSplitContainer" unique_id=1145798413]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Failed"
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="VSplitContainer" unique_id=763616609]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer2" unique_id=1257003577]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Survivors:"
+
+[node name="Survivors Label" type="Label" parent="VSplitContainer/HSplitContainer2" unique_id=1387359870]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Failed"
+
+[node name="HSplitContainer3" type="HSplitContainer" parent="VSplitContainer" unique_id=577202973]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VSplitContainer/HSplitContainer3" unique_id=1643345749]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Resources Collected:"
+
+[node name="ResourcesLabel" type="Label" parent="VSplitContainer/HSplitContainer3" unique_id=18976568]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Failed"
