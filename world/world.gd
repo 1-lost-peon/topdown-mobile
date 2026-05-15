@@ -17,7 +17,7 @@ enum State {
 @export var pickup_scene: PackedScene
 
 var is_client_loaded: bool
-var level: Node
+var level: Level
 var state: State
 
 @onready var enemies: Node3D = $Enemies
@@ -46,10 +46,21 @@ func _process(_delta: float) -> void:
 	# IF STATE == PAUSED
 
 
+func get_player_list() -> Array[Player]:
+	var player_list: Array[Player] = []
+
+	for child in players.get_children():
+		player_list.append(child as Player)
+
+	return player_list
+
+
 # This only runs on the server. It is replicated to clients.
 func spawn_level() -> void:
 	level = level_scene.instantiate()	
 	add_child(level, true)
+	level.rally_point.get_player_list = get_player_list
+	#level.rally_point.players_in_world = players.get_children() #Problem is that the playerlist is empty
 	#level.extraction_spot.player_extracted.connect(end_game)
 	
 	#if multiplayer.get_unique_id() == 1:

@@ -220,6 +220,9 @@ func died() -> void:
 		visuals.number_plate.text = str(coins)
 
 
+func get_peer_id() -> int:
+	return int(name)
+
 func _on_respawn_timer_timeout() -> void:
 	if is_multiplayer_authority():
 		visible = true

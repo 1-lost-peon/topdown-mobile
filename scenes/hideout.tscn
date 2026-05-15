@@ -7,27 +7,28 @@
 [ext_resource type="PackedScene" uid="uid://cnw1g3sre08fr" path="res://assets/art/environment/hideout/gltf/Dummy_Base.gltf" id="4_22kyp"]
 [ext_resource type="PackedScene" uid="uid://cwmnplitfhofx" path="res://assets/art/environment/hideout/gltf/Floor_Dirt.gltf" id="5_ogb1h"]
 [ext_resource type="PackedScene" uid="uid://dcgbxjqb0q4gp" path="res://assets/art/environment/hideout/gltf/Wall_Doorway.gltf" id="6_uscko"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_vtraw"]
-size = Vector3(32, 1, 17)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_vdp1m"]
-size = Vector3(4, 6, 4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_22kyp"]
-size = Vector3(48, 1, 7)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ogb1h"]
-size = Vector3(17, 1, 7)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_vtj6h"]
-size = Vector3(16, 1, 16)
+[ext_resource type="PackedScene" uid="uid://dh7tsneu5v81c" path="res://scenes/rally_point.tscn" id="8_vdp1m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2h6ym"]
 size = Vector2(100, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48kji"]
 albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vdp1m"]
+size = Vector3(4, 6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vtraw"]
+size = Vector3(32, 1, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vtj6h"]
+size = Vector3(16, 1, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_22kyp"]
+size = Vector3(48, 1, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogb1h"]
+size = Vector3(16, 1, 8)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vdp1m"]
 
@@ -41,9 +42,15 @@ sky_material = SubResource("ProceduralSkyMaterial_vtj6h")
 background_mode = 2
 sky = SubResource("Sky_tcf2h")
 
-[node name="Hideout" type="Node3D" unique_id=2114733920 node_paths=PackedStringArray("player_spawn_locations")]
+[node name="Hideout" type="Node3D" unique_id=2114733920 node_paths=PackedStringArray("player_spawn_locations", "rally_point")]
 script = ExtResource("1_vtj6h")
 player_spawn_locations = NodePath("PlayerSpawnLocations")
+rally_point = NodePath("RallyPoint")
+
+[node name="BlackBackground" type="MeshInstance3D" parent="." unique_id=1289206283]
+mesh = SubResource("PlaneMesh_2h6ym")
+surface_material_override/0 = SubResource("StandardMaterial3D_48kji")
+metadata/_edit_lock_ = true
 
 [node name="FirstFloor" type="Node3D" parent="." unique_id=229991318]
 
@@ -142,13 +149,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 14)
 [node name="Floor31" parent="FirstFloor/Floors" unique_id=2052044847 instance=ExtResource("1_vtraw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 14)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="FirstFloor/Floors" unique_id=1889786401]
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/Floors/StaticBody3D" unique_id=339687966]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.942324, 0, 7.7269707)
-shape = SubResource("BoxShape3D_vtraw")
-
 [node name="Primitive_Stairs2" parent="FirstFloor" unique_id=408079637 instance=ExtResource("2_vtj6h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 14)
 
@@ -229,36 +229,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 16)
 [node name="Wall23" parent="FirstFloor/Walls" unique_id=35427323 instance=ExtResource("3_vdp1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 16)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="FirstFloor/Walls" unique_id=2146917196]
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/Walls/StaticBody3D" unique_id=1921968939]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8, 4.5, 1.9670125e-07)
-shape = SubResource("BoxShape3D_22kyp")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="FirstFloor/Walls" unique_id=1226713081]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/Walls/StaticBody3D2" unique_id=2028372018]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 8, 4.5, 1.9670125e-07)
-shape = SubResource("BoxShape3D_22kyp")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="FirstFloor/Walls" unique_id=1277131054]
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/Walls/StaticBody3D3" unique_id=87147333]
-transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -15.999999, 4.5, 8.5)
-shape = SubResource("BoxShape3D_ogb1h")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="FirstFloor/Walls" unique_id=640293212]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0)
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstFloor/Walls/StaticBody3D4" unique_id=1115917659]
-transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, -15.999999, 4.5, 8.5)
-shape = SubResource("BoxShape3D_ogb1h")
-
 [node name="Dummy_Base1" parent="FirstFloor" unique_id=389828450 instance=ExtResource("4_22kyp")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 26, 0.5, 6)
 
@@ -318,14 +288,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 14)
 [node name="Floor_Dirt8" parent="SecondFloor/Floors" unique_id=1785852598 instance=ExtResource("5_ogb1h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 14)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="SecondFloor/Floors" unique_id=150176652]
-disable_mode = 1
-axis_lock_linear_y = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SecondFloor/Floors/StaticBody3D" unique_id=2132004428]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
-shape = SubResource("BoxShape3D_vtj6h")
-
 [node name="Walls" type="Node3D" parent="SecondFloor" unique_id=1811236596]
 
 [node name="Wall1" parent="SecondFloor/Walls" unique_id=817463343 instance=ExtResource("3_vdp1m")]
@@ -352,10 +314,54 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 4, 16)
 [node name="Wall8" parent="SecondFloor/Walls" unique_id=1653605462 instance=ExtResource("3_vdp1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4, 16)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1289206283]
-mesh = SubResource("PlaneMesh_2h6ym")
-surface_material_override/0 = SubResource("StandardMaterial3D_48kji")
-metadata/_edit_lock_ = true
+[node name="PhysicsBoundaries" type="Node3D" parent="." unique_id=214524845]
+
+[node name="FloorCollision1" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=1889786401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 8)
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/FloorCollision1" unique_id=339687966]
+shape = SubResource("BoxShape3D_vtraw")
+
+[node name="FloorCollision2" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=150176652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 8)
+disable_mode = 1
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/FloorCollision2" unique_id=2132004428]
+shape = SubResource("BoxShape3D_vtj6h")
+
+[node name="WallCollision1" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=2146917196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, 0)
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/WallCollision1" unique_id=1921968939]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_22kyp")
+
+[node name="WallCollision2" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=1226713081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 4, 16)
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/WallCollision2" unique_id=2028372018]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_22kyp")
+
+[node name="WallCollision3" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=1277131054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 8)
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/WallCollision3" unique_id=87147333]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+shape = SubResource("BoxShape3D_ogb1h")
+
+[node name="WallCollision4" type="StaticBody3D" parent="PhysicsBoundaries" unique_id=640293212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, 8)
+axis_lock_linear_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PhysicsBoundaries/WallCollision4" unique_id=1115917659]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+shape = SubResource("BoxShape3D_ogb1h")
 
 [node name="PlayerSpawnLocations" type="Node3D" parent="." unique_id=1226117114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 4.5, 6)
@@ -366,6 +372,9 @@ visible = false
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerSpawnLocations/SpawnLocation1" unique_id=401750548]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
 mesh = SubResource("CylinderMesh_vdp1m")
+
+[node name="RallyPoint" parent="." unique_id=1525894073 instance=ExtResource("8_vdp1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 8)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2007038025]
 environment = SubResource("Environment_vdp1m")

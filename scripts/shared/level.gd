@@ -4,7 +4,7 @@ class_name  Level
 
 @export var enemy_spawn_locations: Node3D
 @export var player_spawn_locations: Node3D
-@export var rally_point: Node3D
+@export var rally_point: RallyPoint
 
 
 func get_player_spawn_location() -> Vector3:

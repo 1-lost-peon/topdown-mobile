@@ -2,6 +2,12 @@ extends Node
 
 signal player_connected(peer_id)
 
+enum Role {
+	SERVER,
+	LOCAL_PLAYER,
+	REMOTE_PLAYER,
+}
+
 const DEFAULT_SERVER_IP = "192.168.1.191"
 const MAX_CONNECTIONS = 20
 const PLAYER = preload("res://player/player.tscn")
@@ -73,6 +79,16 @@ func _on_player_connected(id):
 	log_message("Peer Connected | Player", id, "has successfully connected to me.")
 	if is_multiplayer_authority():
 		player_connected.emit(1, id)
+
+
+func get_network_role(peer_id: int) -> Role:
+	if multiplayer.is_server():
+		return Role.SERVER
+	
+	if multiplayer.get_unique_id() == peer_id:
+		return Role.LOCAL_PLAYER
+	
+	return Role.REMOTE_PLAYER
 
 
 func log_message(...args) -> void:
