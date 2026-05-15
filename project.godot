@@ -40,6 +40,10 @@ enabled=PackedStringArray("res://addons/gdscript-linter/plugin.cfg", "res://addo
 players=""
 enemies=""
 
+[gui]
+
+theme/custom="uid://bmb77d7rok5gp"
+
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true

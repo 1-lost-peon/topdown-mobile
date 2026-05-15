@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 		update_loading_bar.rpc(progress_bar.value)
 		progress_bar.value += 20 * delta
 
+
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if is_multiplayer_authority():
 		if body.is_in_group("players"):
