@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://bjt47welu7q4x"]
 
-[node name="TitleScreen" type="Control" unique_id=249762089]
+[ext_resource type="Script" uid="uid://ctsca42hyos1c" path="res://scripts/screen/title_screen.gd" id="1_la07f"]
+
+[node name="TitleScreen" type="Control" unique_id=872655719]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_la07f")
+next_screen = 1
+metadata/_custom_type_script = "uid://dt3icju570woe"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=832671530]
 layout_mode = 1
@@ -35,3 +41,5 @@ theme_override_font_sizes/font_size = 128
 text = "Zombile"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=892695850]

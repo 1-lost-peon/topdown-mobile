@@ -6,7 +6,7 @@ var extraction_time: int = 5
 var is_extracting: bool = false
 var can_extract: bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if multiplayer.get_unique_id() == 1: return
 	if is_multiplayer_authority():
 		#Network.log_message("extracting under server")

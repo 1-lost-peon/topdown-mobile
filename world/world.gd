@@ -145,6 +145,6 @@ func end_game() -> void:
 		}
 		
 		Network.log_message("End game")
-		scene_changed.emit(GUI.Scene.RESULTS)
+		#scene_changed.emit(GUI.Scene.RESULTS)
 		game_ended.emit(results)
 		get_tree().paused = true

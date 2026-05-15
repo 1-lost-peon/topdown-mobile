@@ -1,33 +1,28 @@
 extends CanvasLayer
 class_name GUI
 
-enum Scene {
-	MAIN_MENU,
-	TUTORIAL,
-	RESULTS,
-	EMPTY,
-}
+
 
 @export var main_menu_scene: PackedScene
 @export var tutorial_scene: PackedScene
 @export var results_scene: PackedScene
+@export var title_scene: PackedScene
+@export var name_scene: PackedScene
 
 var world: Node3D
-var main_menu: Node
-var tutorial: Node
-var results: Node
-var scene: Scene
+var current_screen: Screen
+var server_info: Dictionary
+var username: String
 
-@onready var black_scene: Control = $BlackScene
+@onready var black_scene: ColorRect = $BlackScene
 
 
 func _ready() -> void:
-	setup_main_menu()
+	_on_screen_changed(Screen.Types.TITLE)
 	
 	if OS.has_feature("server"):
 		return
 	
-	main_menu.scene_changed.connect(_on_scene_changed)
 
 #func _process(delta: float) -> void:
 	#match scene:
@@ -36,43 +31,56 @@ func _ready() -> void:
 		#Scene.EMPTY: # Comma-separated list for multiple matches
 			#print("Character is moving.")
 
-
-
-func setup_main_menu() -> void:
-	main_menu = main_menu_scene.instantiate()
-	add_child(main_menu)
-
-
-func setup_tutorial() -> void:
-	tutorial = tutorial_scene.instantiate()
-	add_child(tutorial)
-	tutorial.scene_changed.connect(_on_scene_changed)
-
-
-func setup_results() -> void:
-	results = results_scene.instantiate()
-	add_child(results)
-	results.scene_changed.connect(_on_scene_changed)
+func _on_screen_changed(screen: Screen.Types):	
+	await black_fade_in()
+	
+	if current_screen:
+		current_screen.queue_free()
+	
+	match screen:
+		Screen.Types.MAIN_MENU:
+			current_screen = main_menu_scene.instantiate()
+			current_screen.game_selected.connect(set_server_info)
+		Screen.Types.TUTORIAL:
+			current_screen = tutorial_scene.instantiate()
+		Screen.Types.TITLE:
+			current_screen = title_scene.instantiate()
+		Screen.Types.NAME:
+			current_screen = name_scene.instantiate()
+			current_screen.server_info = server_info
+			current_screen.game_joined.connect(set_player_username)
+		Screen.Types.RESULTS:
+			current_screen = results_scene.instantiate()
+		Screen.Types.EMPTY:
+			print("screen is empty")
+		
+	add_child(current_screen)
+	current_screen.screen_changed.connect(_on_screen_changed)
+	
+	await black_fade_out()
 
 
 func set_results(new_results: Dictionary) -> void:
-	results.status_label.text = str(new_results.status)
+	current_screen.status_label.text = str(new_results.status)
 
 
-func _on_scene_changed(scene: Scene) -> void:
+func set_server_info(new_info):
+	server_info = new_info
+	print(server_info)
+
+
+func set_player_username(new_username):
+	username = new_username
+	print(username)
+
+
+func black_fade_in() -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 255), 0.0)
-	match scene:
-		Scene.MAIN_MENU:
-			setup_main_menu()
-		Scene.TUTORIAL:
-			setup_tutorial()
-		Scene.RESULTS:
-			setup_results()
-		Scene.EMPTY:
-			pass
+	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 255), 0.75)
+	await tween.finished
 
 
-func _on_scene_loaded() -> void:
+func black_fade_out() -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 0), 1.0)
+	tween.tween_property(black_scene, "modulate", Color.from_rgba8(255, 255, 255, 0), 0.75)
+	await tween.finished

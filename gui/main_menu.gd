@@ -1,24 +1,13 @@
-extends Control
+extends Screen
 
-signal game_joined
-signal server_started
-signal scene_changed
-
-@onready var line_edit: LineEdit = $LineEdit
+signal game_selected()
 
 
-func _on_start_server_pressed() -> void:
-	Network.create_game()
-	server_started.emit()
+func _ready() -> void:
+	Network.game_found.connect(_found_game)
+
+
+func _found_game(server_info):
+	$VBoxContainer/Button.text = server_info.name
+	game_selected.emit(server_info)
 	end_scene()
-
-
-func _on_join_game_pressed() -> void:
-	Network.join_game(line_edit.text)
-	game_joined.emit()
-	end_scene()
-
-
-func end_scene() -> void:
-	scene_changed.emit(GUI.Scene.TUTORIAL)
-	queue_free()

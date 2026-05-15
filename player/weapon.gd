@@ -16,7 +16,7 @@ func _ready():
 	cpu_particles_3d.emitting = true
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_multiplayer_authority():
 		if is_attacking:
 			cpu_particles_3d.emitting = true

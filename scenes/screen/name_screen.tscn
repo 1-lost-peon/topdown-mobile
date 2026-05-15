@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bla68xofib3qf"]
 
+[ext_resource type="Script" uid="uid://b6xy6w0enm0bd" path="res://scripts/screen/name_screen.gd" id="1_q148q"]
+
 [node name="NameScreen" type="Control" unique_id=265001518]
 layout_mode = 3
 anchors_preset = 15
@@ -7,6 +9,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_q148q")
+type = 3
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=57185353]
 layout_mode = 1
@@ -45,3 +49,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Join Game"
+
+[node name="Timer" type="Timer" parent="." unique_id=28038859]
+
+[connection signal="pressed" from="VBoxContainer/Join Game" to="." method="_on_join_game_pressed"]

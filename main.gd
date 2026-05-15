@@ -1,19 +1,34 @@
 extends Node
 
+var udp := PacketPeerUDP.new()
+
 @onready var world: Node3D = %World
 @onready var gui: CanvasLayer = %GUI
+@onready var broadcast_timer: Timer = $BroadcastTimer
 
 
 func _ready() -> void:
-	world.scene_loaded.connect(gui._on_scene_loaded)
-	world.scene_changed.connect(gui._on_scene_changed)
+	#world.scene_loaded.connect(gui._on_scene_loaded)
+	#world.scene_changed.connect(gui._on_scene_changed)
 	world.game_ended.connect(gui.set_results)
+	
 	if OS.has_feature("server"):
+		gui.visible = false
 		Network.player_connected.connect(_on_player_connected.rpc_id)
-		gui.main_menu._on_start_server_pressed()
+		Network.create_game()
 		_on_click_join_game()
+		
+		Network.start_game_broadcast()
+		broadcast_timer.timeout.connect(Network.broadcast_game)
+		
 	else:
-		gui.main_menu.game_joined.connect(_on_click_join_game)
+		Network.start_game_discovery()
+		broadcast_timer.timeout.connect(Network.discover_game)
+		
+		_on_click_join_game()
+				
+	broadcast_timer.start()
+
 
 
 func _on_click_join_game() -> void:

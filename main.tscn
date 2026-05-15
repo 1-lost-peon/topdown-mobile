@@ -16,3 +16,6 @@ layer = 2
 [node name="World" parent="." unique_id=1944548304 instance=ExtResource("2_h2yge")]
 unique_name_in_owner = true
 level_scene = ExtResource("4_1bvp3")
+
+[node name="BroadcastTimer" type="Timer" parent="." unique_id=360636254]
+wait_time = 3.0

@@ -1,6 +1,7 @@
 extends Node
 
 signal player_connected(peer_id)
+signal game_found(game)
 
 enum Role {
 	SERVER,
@@ -11,10 +12,16 @@ enum Role {
 const DEFAULT_SERVER_IP = "192.168.1.191"
 const MAX_CONNECTIONS = 20
 const PLAYER = preload("res://player/player.tscn")
-const PORT = 7000
+const GAME_PORT = 7000
+const DISCOVERY_PORT := 9999
+
 
 var players_loaded = 0
 var ip_address: String = get_local_lan_ip()
+var broadcast_udp := PacketPeerUDP.new()
+var discovery_udp := PacketPeerUDP.new()
+
+
 
 
 func _ready():
@@ -51,7 +58,7 @@ func join_game(address = ""):
 	
 	var peer = ENetMultiplayerPeer.new()
 	
-	var error = peer.create_client(address, PORT)
+	var error = peer.create_client(address, GAME_PORT)
 	if error:
 		return error
 	
@@ -60,7 +67,7 @@ func join_game(address = ""):
 
 func create_game():
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(PORT, MAX_CONNECTIONS)
+	var error = peer.create_server(GAME_PORT, MAX_CONNECTIONS)
 	
 	if error:
 		return error
@@ -89,6 +96,42 @@ func get_network_role(peer_id: int) -> Role:
 		return Role.LOCAL_PLAYER
 	
 	return Role.REMOTE_PLAYER
+
+
+func start_game_broadcast():
+	#if address.is_empty():
+		#address = ip_address
+	broadcast_udp.set_broadcast_enabled(true)
+
+
+func broadcast_game() -> void:
+	var msg := {
+		"name": "Josh's super cool game",
+		"ip": ip_address,
+		"port": GAME_PORT,
+		"players": multiplayer.get_peers().size() + 1,
+		"max_players": MAX_CONNECTIONS
+	}
+
+	var data := JSON.stringify(msg).to_utf8_buffer()
+
+	broadcast_udp.set_dest_address("255.255.255.255", DISCOVERY_PORT)
+	broadcast_udp.put_packet(data)
+
+
+func start_game_discovery():
+	discovery_udp.bind(DISCOVERY_PORT)
+
+
+func discover_game() -> void:
+	while discovery_udp.get_available_packet_count() > 0:
+		var packet := discovery_udp.get_packet()
+		var text := packet.get_string_from_utf8()
+		var data = JSON.parse_string(text)
+
+		if data:
+			log_message("Found game:", data.name, data.ip, data.port)
+			game_found.emit(data)
 
 
 func log_message(...args) -> void:
