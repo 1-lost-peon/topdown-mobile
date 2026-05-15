@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dh7tsneu5v81c"]
+
+[ext_resource type="Script" uid="uid://dykm2hy5hyybi" path="res://scripts/shared/rally_point.gd" id="1_br6nx"]
+[ext_resource type="Shader" uid="uid://cb5bsoduh4utj" path="res://player/player_circle.gdshader" id="2_egn8q"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ic28p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v78h1"]
+render_priority = 0
+shader = ExtResource("2_egn8q")
+shader_parameter/outline_color = Color(1, 0.07058824, 0.14901961, 1)
+shader_parameter/center_color = Color(1, 1, 1, 0.2)
+shader_parameter/radius = 0.42
+shader_parameter/outline_width = 0.06
+shader_parameter/glow_width = 0.08
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ayrop"]
+radius = 0.839
+
+[node name="RallyPoint" type="Node3D" unique_id=1525894073]
+script = ExtResource("1_br6nx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=284575202]
+mesh = SubResource("PlaneMesh_ic28p")
+surface_material_override/0 = SubResource("ShaderMaterial_v78h1")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1885743432]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=685164381]
+shape = SubResource("SphereShape3D_ayrop")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1056114698]
+visible = false
+custom_minimum_size = Vector2(4.665, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -15.0
+offset_right = 250.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 signal player_died
 
 const SPEED = 5.0

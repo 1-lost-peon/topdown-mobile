@@ -50,10 +50,10 @@ func _process(_delta: float) -> void:
 func spawn_level() -> void:
 	level = level_scene.instantiate()	
 	add_child(level, true)
-	level.extraction_spot.player_extracted.connect(end_game)
+	#level.extraction_spot.player_extracted.connect(end_game)
 	
-	if multiplayer.get_unique_id() == 1:
-		level.enemy_timer.timeout.connect(on_enemy_spawn_timer_timeout)
+	#if multiplayer.get_unique_id() == 1:
+		#level.enemy_timer.timeout.connect(on_enemy_spawn_timer_timeout)
 
 
 # This only runs on the server. It is replicated to clients.
@@ -63,7 +63,7 @@ func spawn_player(player_name) -> void:
 	var player = player_scene.instantiate()
 	player.name = str(player_name)
 	players.add_child(player, true)
-	player.global_position = level.get_spawn_location()
+	player.global_position = level.get_player_spawn_location()
 	player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
 	player.player_died.connect(on_player_died.bind(player))
 
