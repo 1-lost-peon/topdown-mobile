@@ -20,6 +20,7 @@ var players_loaded = 0
 var ip_address: String = get_local_lan_ip()
 var broadcast_udp := PacketPeerUDP.new()
 var discovery_udp := PacketPeerUDP.new()
+var players_info: Dictionary
 
 
 
@@ -52,7 +53,17 @@ func get_local_lan_ip() -> String:
 	return "127.0.0.1"
 
 
-func join_game(address = ""):
+func get_lan_broadcast_ip() -> String:
+	var ip := get_local_lan_ip()
+	var parts := ip.split(".")
+
+	if parts.size() != 4:
+		return "255.255.255.255"
+
+	return "%s.%s.%s.255" % [parts[0], parts[1], parts[2]]	
+
+
+func join_game(address: String, username: String):
 	if address.is_empty():
 		address = ip_address
 	
@@ -63,6 +74,9 @@ func join_game(address = ""):
 		return error
 	
 	multiplayer.multiplayer_peer = peer
+	
+	players_info[multiplayer.get_unique_id()] = username
+	#register_player.rpc_id(1, multiplayer.get_unique_id(), username)
 
 
 func create_game():
@@ -80,12 +94,24 @@ func create_game():
 
 func _on_connected_ok():
 	log_message("Connected To Server | I've succesfully connected to the server.")
+	add_player_info.rpc_id(1, players_info[multiplayer.get_unique_id()])
 
 
 func _on_player_connected(id):
 	log_message("Peer Connected | Player", id, "has successfully connected to me.")
-	if is_multiplayer_authority():
-		player_connected.emit(1, id)
+	#log_message(players_info)
+	#if is_multiplayer_authority():
+		#player_connected.emit(1, players_info)
+	#else:
+		#add_player_info.rpc_id(1, players_info[multiplayer.get_unique_id()])
+
+
+@rpc("any_peer")
+func add_player_info(username: String):
+	var player_peer_id = multiplayer.get_remote_sender_id()
+	players_info[player_peer_id] = username
+	log_message("Player", player_peer_id, "has been registered as", username)
+	player_connected.emit(1, players_info)
 
 
 func get_network_role(peer_id: int) -> Role:
@@ -114,13 +140,33 @@ func broadcast_game() -> void:
 	}
 
 	var data := JSON.stringify(msg).to_utf8_buffer()
+	var broadcast_ip := get_lan_broadcast_ip()
 
-	broadcast_udp.set_dest_address("255.255.255.255", DISCOVERY_PORT)
-	broadcast_udp.put_packet(data)
+	broadcast_udp.set_dest_address(broadcast_ip, DISCOVERY_PORT)
+	var error := broadcast_udp.put_packet(data)
+
+	if error != OK:
+		log_message("Broadcast failed:", error)
+	else:
+		log_message("Broadcast sent:", broadcast_ip, msg.ip, msg.port)
 
 
-func start_game_discovery():
-	discovery_udp.bind(DISCOVERY_PORT)
+func start_game_discovery() -> void:
+	log_message("Trying to start discovery...")
+
+	if OS.has_feature("server"):
+		log_message("Skipped discovery because this is server build.")
+		return
+
+	discovery_udp.set_broadcast_enabled(true)
+
+	var error := discovery_udp.bind(DISCOVERY_PORT, "0.0.0.0")
+
+	if error != OK:
+		log_message("Discovery bind failed:", error)
+		return
+
+	log_message("Discovery receiver started on port:", DISCOVERY_PORT)
 
 
 func discover_game() -> void:

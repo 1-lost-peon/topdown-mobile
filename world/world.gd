@@ -68,15 +68,19 @@ func spawn_level() -> void:
 
 
 # This only runs on the server. It is replicated to clients.
-func spawn_player(player_name) -> void:
-	Network.log_message("Spawning player", player_name, "into the world...")
-	
-	var player = player_scene.instantiate()
-	player.name = str(player_name)
-	players.add_child(player, true)
-	player.global_position = level.get_player_spawn_location()
-	player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
-	player.player_died.connect(on_player_died.bind(player))
+func spawn_player(player_info: Dictionary) -> void:
+	print(player_info)
+	if player_info.size() == 1:
+		var peer_id = player_info.keys()[0]
+		Network.log_message("Spawning player", player_info[peer_id], "into the world...")
+		
+		var player = player_scene.instantiate()
+		player.username = str(player_info[peer_id])
+		player.name = str(peer_id)
+		players.add_child(player, true)
+		player.global_position = level.get_player_spawn_location()
+		player.respawn_timer.timeout.connect(on_player_respawn_timer_timeout.bind(player))
+		player.player_died.connect(on_player_died.bind(player))
 
 
 func on_player_respawn_timer_timeout(player: Node) -> void:

@@ -10,7 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q148q")
-type = 3
+next_screen = 5
+type = 2
+timeout_time = null
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=57185353]
 layout_mode = 1

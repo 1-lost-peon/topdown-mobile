@@ -36,5 +36,5 @@ func _on_click_join_game() -> void:
 
 
 @rpc("authority", "call_local")
-func _on_player_connected(new_player_id) -> void:
-	world.spawn_player(str(new_player_id))
+func _on_player_connected(new_player_info: Dictionary) -> void:
+	world.spawn_player(new_player_info)

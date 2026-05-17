@@ -53,6 +53,8 @@ func _on_screen_changed(screen: Screen.Types):
 			current_screen = results_scene.instantiate()
 		Screen.Types.EMPTY:
 			print("screen is empty")
+			await black_fade_out()
+			return
 		
 	add_child(current_screen)
 	current_screen.screen_changed.connect(_on_screen_changed)

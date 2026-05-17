@@ -8,6 +8,6 @@ var server_info: Dictionary
 
 
 func _on_join_game_pressed() -> void:
-	Network.join_game(server_info.ip) # This one should probably be on the previous screen?
+	Network.join_game(server_info.ip, name_line.text) # This one should probably be on the previous screen?
 	game_joined.emit(name_line.text)
 	end_scene()

@@ -27,13 +27,15 @@ var input_movement_strength: float = 0.0
 var input_attack_direction: Vector2 = Vector2.ZERO
 var input_attack_strength: float = 0.0
 var coins: int = 0
+var username: String
+
 
 func _enter_tree() -> void:
 	add_to_group("players")
 
 
 func _ready() -> void:
-	visuals.nameplate.text = name
+	visuals.nameplate.text = username
 	is_dead = false
 	
 	if multiplayer.get_unique_id() != int(name):
