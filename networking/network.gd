@@ -108,10 +108,13 @@ func _on_player_connected(id):
 
 @rpc("any_peer")
 func add_player_info(username: String):
-	var player_peer_id = multiplayer.get_remote_sender_id()
+	var player_peer_id := multiplayer.get_remote_sender_id()
+
 	players_info[player_peer_id] = username
+
 	log_message("Player", player_peer_id, "has been registered as", username)
-	player_connected.emit(1, players_info)
+
+	player_connected.emit(1, { player_peer_id: username })
 
 
 func get_network_role(peer_id: int) -> Role:
