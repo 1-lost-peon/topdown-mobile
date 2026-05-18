@@ -68,3 +68,4 @@ horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=778689319]
 layout_mode = 2
+max_value = 7.0

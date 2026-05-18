@@ -72,7 +72,7 @@ func spawn_player(player_info: Dictionary) -> void:
 	print(player_info)
 	if player_info.size() == 1:
 		var peer_id = player_info.keys()[0]
-		Network.log_message("Spawning player", player_info[peer_id], "into the world...")
+		Network.utility.log("Spawning player", player_info[peer_id], "into the world...")
 		
 		var player = player_scene.instantiate()
 		player.username = str(player_info[peer_id])

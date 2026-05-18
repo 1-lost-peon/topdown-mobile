@@ -4,7 +4,7 @@ signal game_selected()
 
 
 func _ready() -> void:
-	Network.game_found.connect(_found_game)
+	Network.discovery.game_found.connect(_found_game)
 
 
 func _found_game(server_info):
