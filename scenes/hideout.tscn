@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cnw1g3sre08fr" path="res://assets/art/environment/hideout/gltf/Dummy_Base.gltf" id="4_22kyp"]
 [ext_resource type="PackedScene" uid="uid://cwmnplitfhofx" path="res://assets/art/environment/hideout/gltf/Floor_Dirt.gltf" id="5_ogb1h"]
 [ext_resource type="PackedScene" uid="uid://dcgbxjqb0q4gp" path="res://assets/art/environment/hideout/gltf/Wall_Doorway.gltf" id="6_uscko"]
+[ext_resource type="Texture2D" uid="uid://y40atvqrx7ks" path="res://assets/art/gui/Grey/Double/button_rectangle_flat.png" id="8_22kyp"]
 [ext_resource type="PackedScene" uid="uid://dh7tsneu5v81c" path="res://scenes/rally_point.tscn" id="8_vdp1m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2h6ym"]
@@ -36,6 +37,9 @@ size = Vector3(4, 1, 8)
 size = Vector3(16, 1, 8)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_vdp1m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qeqgy"]
+texture = ExtResource("8_22kyp")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vtj6h"]
 sky_top_color = Color(0.99333334, 1, 0.9, 1)
@@ -429,6 +433,10 @@ mesh = SubResource("CylinderMesh_vdp1m")
 
 [node name="RallyPoint" parent="." unique_id=1525894073 instance=ExtResource("8_vdp1m")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -2, -0.965, -10)
+
+[node name="Button" type="Button" parent="RallyPoint" unique_id=1807354907]
+theme_override_styles/normal = SubResource("StyleBoxTexture_qeqgy")
+text = "fex"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2007038025]
 environment = SubResource("Environment_vdp1m")
