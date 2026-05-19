@@ -2,12 +2,10 @@ extends Screen
 
 signal game_selected()
 
-
-func _ready() -> void:
-	Network.discovery.game_found.connect(_found_game)
+@onready var name_line: LineEdit = $VBoxContainer/NameLine
 
 
-func _found_game(server_info):
-	$VBoxContainer/Button.text = server_info.name
-	game_selected.emit(server_info)
+func _on_join_game_pressed() -> void:
+	Network.players_info[multiplayer.get_unique_id()] = name_line.text
+	Network.add_player_info.rpc_id(1, Network.players_info[multiplayer.get_unique_id()])
 	end_scene()

@@ -1,16 +1,6 @@
 [gd_scene format=3 uid="uid://b1fku66aejinc"]
 
 [ext_resource type="Script" uid="uid://bv41uluratcmu" path="res://gui/main_menu.gd" id="1_l4el1"]
-[ext_resource type="Texture2D" uid="uid://dbcv3tya3t40g" path="res://assets/art/gui/Green/Double/button_square_flat.png" id="2_pvbwi"]
-[ext_resource type="Texture2D" uid="uid://y40atvqrx7ks" path="res://assets/art/gui/Grey/Double/button_rectangle_flat.png" id="3_w0j3w"]
-[ext_resource type="Texture2D" uid="uid://d4b6pg7orpyvd" path="res://assets/art/gui/Yellow/Double/button_rectangle_flat.png" id="4_0vrfb"]
-[ext_resource type="Texture2D" uid="uid://bdk42xbmjdhn0" path="res://assets/art/gui/Blue/Double/arrow_basic_e.png" id="5_5ntmy"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qeqgy"]
-texture = ExtResource("3_w0j3w")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ins1"]
-texture = ExtResource("4_0vrfb")
 
 [node name="MainScreen" type="Control" unique_id=1077805799]
 layout_mode = 3
@@ -20,9 +10,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l4el1")
-next_screen = 2
+next_screen = 5
+type = 1
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1574305503]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1021157303]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,67 +22,35 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.9137255, 0.9137255, 0.9098039, 1)
 
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=218981935]
-layout_mode = 0
-offset_left = 262.0
-offset_top = 102.0
-offset_right = 1033.0
-offset_bottom = 581.0
-texture = ExtResource("2_pvbwi")
-region_rect = Rect2(7.878891, 8.6142235, 112.389755, 110.36383)
-
-[node name="Label" type="Label" parent="." unique_id=283115039]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -260.5
-offset_top = 121.0
-offset_right = 260.5
-offset_bottom = 193.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.051970966, 0.05197096, 0.05197095, 1)
-theme_override_font_sizes/font_size = 64
-text = "Server List"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=878795662]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=244604196]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -298.0
-offset_top = -112.0
-offset_right = 302.0
-offset_bottom = 162.0
+offset_left = -252.25
+offset_top = -144.0
+offset_right = 252.25
+offset_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 64
+alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=2139751742]
+[node name="NameLine" type="LineEdit" parent="VBoxContainer" unique_id=2076586847]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_qeqgy")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_8ins1")
-toggle_mode = true
-text = "fex"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Enter Your Name"
+alignment = 1
 
-[node name="Join Game" type="TextureButton" parent="." unique_id=1938004393]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -111.0
-offset_right = -66.0
-offset_bottom = -47.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="Join Game" type="Button" parent="VBoxContainer" unique_id=1484623320]
+layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = ExtResource("5_5ntmy")
+size_flags_vertical = 3
+text = "Join Game"
 
-[node name="Timer" type="Timer" parent="." unique_id=2079322977]
+[node name="Timer" type="Timer" parent="." unique_id=149641154]
 
-[connection signal="pressed" from="Join Game" to="." method="_on_join_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Join Game" to="." method="_on_join_game_pressed"]

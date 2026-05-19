@@ -6,6 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://7dujjowjcp6r" path="res://player/player.tscn" id="5_fn3g3"]
 [ext_resource type="PackedScene" uid="uid://bf821lcuaeajj" path="res://world/pickup.tscn" id="5_mmdvd"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mmdvd"]
+sky_top_color = Color(0.99333334, 1, 0.9, 1)
+
+[sub_resource type="Sky" id="Sky_tcf2h"]
+sky_material = SubResource("ProceduralSkyMaterial_mmdvd")
+
+[sub_resource type="Environment" id="Environment_fn3g3"]
+background_mode = 2
+sky = SubResource("Sky_tcf2h")
+
 [node name="World" type="Node3D" unique_id=1944548304]
 script = ExtResource("1_4717r")
 enemy_scene = ExtResource("2_h5o24")
@@ -30,3 +40,6 @@ spawn_path = NodePath("../Enemies")
 [node name="PickupSpawner" type="MultiplayerSpawner" parent="." unique_id=1321983651]
 _spawnable_scenes = PackedStringArray("uid://bf821lcuaeajj")
 spawn_path = NodePath("../Pickups")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=471423299]
+environment = SubResource("Environment_fn3g3")

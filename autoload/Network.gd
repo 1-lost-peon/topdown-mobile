@@ -27,7 +27,6 @@ var utility
 
 
 func _ready():
-	
 	multiplayer.peer_connected.connect(_on_player_connected) # Happens on existing clients
 	#multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_ok) # Happens locally...
@@ -75,7 +74,7 @@ func _on_connected_ok():
 	loading.set_step(loading.Step.CONNECTED)
 	utility.log("Connected To Server | I've succesfully connected to the server.")
 	loading.set_step(loading.Step.REGISTERING_PLAYER)
-	add_player_info.rpc_id(1, players_info[multiplayer.get_unique_id()])
+	#add_player_info.rpc_id(1, players_info[multiplayer.get_unique_id()])
 	loading.set_step(loading.Step.READY)
 
 
