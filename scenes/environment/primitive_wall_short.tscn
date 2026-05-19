@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://725a5kxlo1fw"]
+
+[ext_resource type="PackedScene" uid="uid://cssv8maxvx5nv" path="res://assets/art/environment/hideout/gltf/Primitive_Wall_Short.gltf" id="1_ceywc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xt8h"]
+size = Vector3(4, 2, 1)
+
+[node name="PrimitiveWallShort" type="Node3D" unique_id=1973298858]
+
+[node name="Mesh" parent="." unique_id=1613084951 instance=ExtResource("1_ceywc")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1456014603]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1294484330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_2xt8h")

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://drjvwmg1m67bs"]
+
+[ext_resource type="PackedScene" uid="uid://b3hl5satiux5e" path="res://assets/art/environment/hideout/gltf/Floor_Prototype.gltf" id="1_4mcsx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6d0dt"]
+size = Vector3(4, 0.5, 4)
+
+[node name="FloorPrototype" type="Node3D" unique_id=1961428056]
+
+[node name="Mesh" parent="." unique_id=689525891 instance=ExtResource("1_4mcsx")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1095902136]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=918524753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_6d0dt")
