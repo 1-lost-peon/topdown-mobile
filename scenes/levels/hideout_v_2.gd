@@ -9,7 +9,8 @@ extends Level
 
 
 func _ready() -> void:
-	spawn_centered_grid(100)
+	#spawn_centered_grid(100)
+	enemy_spawn_timer.start()
 
 
 func spawn_grid(grid_count: int) -> void:

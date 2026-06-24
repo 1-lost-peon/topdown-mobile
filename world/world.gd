@@ -63,8 +63,8 @@ func spawn_level() -> void:
 	#level.rally_point.players_in_world = players.get_children() #Problem is that the playerlist is empty
 	#level.extraction_spot.player_extracted.connect(end_game)
 	
-	#if multiplayer.get_unique_id() == 1:
-		#level.enemy_timer.timeout.connect(on_enemy_spawn_timer_timeout)
+	if multiplayer.get_unique_id() == 1:
+		level.enemy_spawn_timer.timeout.connect(on_enemy_spawn_timer_timeout)
 
 
 # This only runs on the server. It is replicated to clients.
@@ -89,7 +89,7 @@ func on_player_respawn_timer_timeout(player: Node) -> void:
 
 # This only runs on the server. It is replicated to clients.
 func on_enemy_spawn_timer_timeout() -> void:
-	Network.log_message("Spawning enemies into the world...")
+	#Network.log_message("Spawning enemies into the world...")
 	
 	var enemy = enemy_scene.instantiate()
 	enemy.name = "Enemy"
@@ -98,7 +98,7 @@ func on_enemy_spawn_timer_timeout() -> void:
 
 
 func on_player_died(player) -> void:
-	Network.log_message("Spawning", player.coins, "coin(s) into the world...")
+	#Network.log_message("Spawning", player.coins, "coin(s) into the world...")
 	
 	for x in player.coins:
 		var pickup = pickup_scene.instantiate()
@@ -152,3 +152,23 @@ func end_game() -> void:
 		#scene_changed.emit(GUI.Scene.RESULTS)
 		game_ended.emit(results)
 		get_tree().paused = true
+
+
+@rpc("any_peer", "reliable")
+func update_player_input(user_input: Dictionary) -> void:
+	var player_peer_id = multiplayer.get_remote_sender_id()
+	var player = get_player_by_peer_id(player_peer_id)
+	if player != null:
+		match user_input["type"]:
+			UserInput.Type.COMBAT:
+				player.handle_combat_input(user_input)
+			UserInput.Type.BUILD:
+				player.handle_build_input(user_input)
+
+
+func get_player_by_peer_id(peer_id: int) -> Player:	
+	for player in players.get_children():
+		if player.name == str(peer_id):
+			return player
+	
+	return null

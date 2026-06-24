@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://fiktp687khbc" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://kvux3lrcv1ao" path="res://world/world.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://t73nq8kvwf56" path="res://scenes/levels/hideout_v_2.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://player/hud.tscn" id="5_lquwl"]
 
 [node name="Main" type="Node" unique_id=785849938]
 process_mode = 3
@@ -19,3 +20,6 @@ level_scene = ExtResource("4_1bvp3")
 
 [node name="BroadcastTimer" type="Timer" parent="." unique_id=360636254]
 wait_time = 3.0
+
+[node name="HUD" parent="." unique_id=670834492 instance=ExtResource("5_lquwl")]
+layer = 3

@@ -21,11 +21,14 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_h2i1p"]
 
-[node name="HideoutV2" type="Node3D" unique_id=219841725 node_paths=PackedStringArray("player_spawn_locations", "rally_point")]
+[node name="HideoutV2" type="Node3D" unique_id=219841725 node_paths=PackedStringArray("enemy_spawn_locations", "player_spawn_locations", "rally_point", "enemy_spawn_timer")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
 script = ExtResource("1_pordk")
 grid_square_scene = ExtResource("2_sdlrd")
+enemy_spawn_locations = NodePath("EnemySpawnLocations")
 player_spawn_locations = NodePath("PlayerSpawnLocations")
 rally_point = NodePath("RallyPoint")
+enemy_spawn_timer = NodePath("EnemySpawnTimer")
 
 [node name="Row1" type="Node3D" parent="." unique_id=781822648]
 metadata/_edit_lock_ = true
@@ -1078,3 +1081,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.5, 25.5)
 
 [node name="table_medium_Decorated2" parent="." unique_id=723819022 instance=ExtResource("12_hko0a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0.5, 36)
+
+[node name="EnemySpawnLocations" type="Node3D" parent="." unique_id=11415630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.991386, 0.5, 33.334534)
+visible = false
+
+[node name="SpawnLocation1" type="Node3D" parent="EnemySpawnLocations" unique_id=1450494001]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemySpawnLocations/SpawnLocation1" unique_id=1484888065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.44008487, 0)
+mesh = SubResource("CylinderMesh_h2i1p")
+
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=507338073]
+wait_time = 3.0

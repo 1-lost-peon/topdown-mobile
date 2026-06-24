@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://r6md58jt4tcd" path="res://assets/art/gui/Blue/Double/button_rectangle_depth_gradient.png" id="1_biaja"]
 [ext_resource type="FontFile" uid="uid://bcst3vv21vf1f" path="res://assets/font/Kenney Future.ttf" id="1_ols5k"]
 [ext_resource type="Texture2D" uid="uid://c61tfbjtsu3lk" path="res://assets/art/gui/Blue/Double/button_rectangle_gradient.png" id="2_vnc4k"]
-[ext_resource type="Texture2D" uid="uid://dc8vkve6o8vos" path="res://assets/art/gui/Grey/Double/button_rectangle_border.png" id="3_x127s"]
-[ext_resource type="Texture2D" uid="uid://y40atvqrx7ks" path="res://assets/art/gui/Grey/Double/button_rectangle_flat.png" id="4_qjhx0"]
+[ext_resource type="Texture2D" uid="uid://bjmy3oi3jjsy" path="res://assets/art/gui/Extra/Double/input_outline_rectangle.png" id="3_u427p"]
+[ext_resource type="Texture2D" uid="uid://ed0v6bxktp0b" path="res://assets/art/gui/Extra/Double/input_rectangle.png" id="4_7rtxy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x127s"]
 texture = ExtResource("2_vnc4k")
@@ -12,14 +12,19 @@ texture = ExtResource("2_vnc4k")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnc4k"]
 texture = ExtResource("1_biaja")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hofdy"]
+texture = ExtResource("3_u427p")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qjhx0"]
-texture = ExtResource("3_x127s")
+texture = ExtResource("4_7rtxy")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u427p"]
-texture = ExtResource("4_qjhx0")
+texture = ExtResource("4_7rtxy")
+region_rect = Rect2(8.590599, 11.624168, 367.11426, 108.34)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7rtxy"]
 texture = ExtResource("2_vnc4k")
+region_rect = Rect2(8.92337, 4.1224556, 366.69348, 115.559555)
 
 [resource]
 default_font = ExtResource("1_ols5k")
@@ -30,6 +35,7 @@ Button/styles/normal = SubResource("StyleBoxTexture_vnc4k")
 LineEdit/colors/caret_color = Color(0.088559814, 0.0885599, 0.08856019, 1)
 LineEdit/colors/font_color = Color(0.07284246, 0.072842725, 0.07284253, 1)
 LineEdit/constants/caret_width = 4
+LineEdit/styles/focus = SubResource("StyleBoxTexture_hofdy")
 LineEdit/styles/normal = SubResource("StyleBoxTexture_qjhx0")
 ProgressBar/colors/font_color = Color(0, 0, 0, 1)
 ProgressBar/styles/background = SubResource("StyleBoxTexture_u427p")

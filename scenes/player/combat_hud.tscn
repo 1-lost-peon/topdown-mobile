@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bgdarkffnvton"]
+
+[ext_resource type="Texture2D" uid="uid://bdlm2im76hwe1" path="res://player/joystick_circle_pad_a.png" id="1_t5if8"]
+[ext_resource type="Script" uid="uid://bqydaomnm65e4" path="res://scripts/player/combat_hud.gd" id="1_yxcb0"]
+[ext_resource type="Texture2D" uid="uid://cic47psu7jdvj" path="res://player/joystick_circle_nub_c.png" id="2_yxcb0"]
+
+[node name="CombatHUD" type="Control" unique_id=1405550588]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_yxcb0")
+
+[node name="JoyStickPad" type="TextureRect" parent="." unique_id=1693535354]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.49803922)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = -320.0
+offset_right = 336.0
+offset_bottom = -64.0
+grow_vertical = 0
+texture = ExtResource("1_t5if8")
+
+[node name="JoyStickNub" type="TextureRect" parent="JoyStickPad" unique_id=683713418]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -192.0
+offset_right = 192.0
+offset_bottom = -64.0
+grow_vertical = 0
+texture = ExtResource("2_yxcb0")
+
+[node name="AttackPad" type="TextureRect" parent="." unique_id=1921148917]
+modulate = Color(1, 0.16470589, 0.3882353, 1)
+self_modulate = Color(1, 1, 1, 0.49803922)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -336.0
+offset_top = -320.0
+offset_right = -80.0
+offset_bottom = -64.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("1_t5if8")
+
+[node name="AttackNub" type="TextureRect" parent="AttackPad" unique_id=29572875]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -192.0
+offset_right = 192.0
+offset_bottom = -64.0
+grow_vertical = 0
+texture = ExtResource("2_yxcb0")

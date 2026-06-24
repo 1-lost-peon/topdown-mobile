@@ -12,5 +12,5 @@ func _process(_delta: float) -> void:
 		end_scene()
 
 
-func _update_load_bar(step: Network.NetLoading.Step, progress: float, message: String):
+func _update_load_bar(_step: Network.NetLoading.Step, progress: float, _message: String):
 	progress_bar.value = progress

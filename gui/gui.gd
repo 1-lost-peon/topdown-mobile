@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name GUI
 
-
+signal game_joined
 
 @export var main_menu_scene: PackedScene
 @export var tutorial_scene: PackedScene
@@ -19,6 +19,7 @@ var username: String
 
 func _ready() -> void:
 	_on_screen_changed(Screen.Types.TITLE)
+	game_joined.connect(set_player_username)
 	
 	if OS.has_feature("server"):
 		return
@@ -40,7 +41,7 @@ func _on_screen_changed(screen: Screen.Types):
 	match screen:
 		Screen.Types.MAIN_MENU:
 			current_screen = main_menu_scene.instantiate()
-			current_screen.game_selected.connect(set_server_info)
+			current_screen.game_joined = game_joined
 		Screen.Types.TUTORIAL:
 			current_screen = tutorial_scene.instantiate()
 		Screen.Types.TITLE:
@@ -67,12 +68,10 @@ func set_results(new_results: Dictionary) -> void:
 
 func set_server_info(new_info):
 	server_info = new_info
-	print(server_info)
 
 
 func set_player_username(new_username):
 	username = new_username
-	print(username)
 
 
 func black_fade_in() -> void:

@@ -1,0 +1,2 @@
+extends UserInput
+class_name CombatInput

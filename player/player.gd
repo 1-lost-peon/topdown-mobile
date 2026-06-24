@@ -12,7 +12,7 @@ const FULL_SPEED_AT := 0.7
 @onready var mesh_3d: Node3D = $Mesh3D
 @onready var camera = $Camera3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
-@onready var hud: HUD = $HUD
+#@onready var hud: HUD = $HUD
 @onready var respawn_timer: Timer = $RespawnTimer
 @onready var visuals: Visuals = $Visuals
 @onready var weapon: Weapon = $Weapon
@@ -50,11 +50,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		# Turn on the players respwn label here, an RPC
-		show_player_respawn.rpc_id(int(name), str(int(respawn_timer.time_left)))
+		#show_player_respawn.rpc_id(int(name), str(int(respawn_timer.time_left)))
 		return
 	
 	if is_multiplayer_authority():
-		#Network.log_message("Process player as authority") # just server
+		#Network.utility.log("Process player as authority") # just server
 		process_as_server(delta)
 		
 	if multiplayer.get_unique_id() == 1: return
@@ -117,7 +117,8 @@ func process_as_server(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-
+	#Network.utility.log("Movement direction", movement_direction)
+	#Network.utility.log("input_movement_direction", input_movement_direction)
 	attack_direction = (transform.basis * Vector3(input_attack_direction.x, 0, input_attack_direction.y)).normalized()
 	
 	if attack_direction and input_attack_strength > 0.3:
@@ -183,22 +184,15 @@ func update_movement_indicator() -> void:
 	visuals.movement_indicator.position.z = distance
 
 
-func apply_input(new_movement_direction, new_movement_strength, new_attack_direction, new_attack_strength) -> void:
-	input_movement_direction = new_movement_direction
-	input_movement_strength = new_movement_strength
-	input_attack_direction = new_attack_direction
-	input_attack_strength = new_attack_strength
-
-
-@rpc("authority")
-func show_player_respawn(time: String) -> void:
-	hud.respawn_label.visible = true
-	hud.respawn_label.text = "Respawning in " + time + "..."
-
-
-@rpc("authority")
-func hide_player_respawn() -> void:
-	hud.respawn_label.visible = false
+#@rpc("authority")
+#func show_player_respawn(time: String) -> void:
+	#hud.respawn_label.visible = true
+	#hud.respawn_label.text = "Respawning in " + time + "..."
+#
+#
+#@rpc("authority")
+#func hide_player_respawn() -> void:
+	#hud.respawn_label.visible = false
 
 
 @rpc()
@@ -210,6 +204,7 @@ func collected_pickup():
 func set_coins_amount(new_coins_amount):
 	coins = new_coins_amount
 	visuals.number_plate.text = str(coins)
+
 
 func died() -> void:
 	if is_multiplayer_authority():
@@ -229,4 +224,15 @@ func _on_respawn_timer_timeout() -> void:
 	if is_multiplayer_authority():
 		visible = true
 		is_dead = false
-		hide_player_respawn.rpc_id(int(name))
+		#hide_player_respawn.rpc_id(int(name))
+
+
+func handle_combat_input(input: Dictionary):
+	input_movement_direction = input["data"][UserInput.JoystickType.MOVEMENT]["input_direction"]
+	input_movement_strength = input["data"][UserInput.JoystickType.MOVEMENT]["input_strength"]
+	input_attack_direction = input["data"][UserInput.JoystickType.ATTACK]["input_direction"]
+	input_attack_strength = input["data"][UserInput.JoystickType.ATTACK]["input_strength"]
+
+
+func handle_build_input(input: Dictionary):
+	pass

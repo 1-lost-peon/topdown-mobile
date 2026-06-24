@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://yjw5kmd0f55v" path="res://player/Mannequin_Medium.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://dpbvertp32hy0" path="res://player/player.gd" id="1_rkbax"]
-[ext_resource type="PackedScene" uid="uid://8c0p424biava" path="res://player/hud.tscn" id="3_g1dw6"]
 [ext_resource type="PackedScene" uid="uid://c283csdqwfyfx" path="res://player/weapon.tscn" id="4_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://b8s2pyhogxd1i" path="res://player/visuals.tscn" id="4_yw30f"]
 
@@ -36,8 +35,6 @@ shape = SubResource("CapsuleShape3D_oul6g")
 [node name="Visuals" parent="." unique_id=846302141 instance=ExtResource("4_yw30f")]
 
 [node name="Weapon" parent="." unique_id=1972223267 instance=ExtResource("4_qjkh3")]
-
-[node name="HUD" parent="." unique_id=670834492 instance=ExtResource("3_g1dw6")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1993697615]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
